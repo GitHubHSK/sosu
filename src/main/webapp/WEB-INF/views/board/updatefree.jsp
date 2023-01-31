@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ include file="/WEB-INF/include/common-header.jspf"%>
+<%@ include file="/WEB-INF/include/include-header.jspf"%>
 
 <div class="container">
 	<h3>게시글 수정하기</h3>
@@ -97,4 +97,3 @@
 </script>
 <script src="/resources/js/common.js"></script>
 <script src="/resources/js/freeboard.js"></script>
-<%@ include file="/WEB-INF/include/common-footer.jspf" %>

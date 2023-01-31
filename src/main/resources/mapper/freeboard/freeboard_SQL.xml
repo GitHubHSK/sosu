@@ -159,8 +159,6 @@
 			F_DEL_YN = 'Y'										
 		WHERE 
 			F_TABLE = 'F'
-			F_ARTICLE = #{F_ARTICLE}
-						
+			F_ARTICLE = #{F_ARTICLE}				
 	</update>
 </mapper>
-	
