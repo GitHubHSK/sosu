@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import second.sosu.board.dao.FreeBoardDAO;
-import second.sosu.common.domain.CommandMap;
 
 @Service("freeboardService")
 public class FreeBoardServiceImpl implements FreeBoardService{
@@ -22,8 +21,8 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	
 	//리뷰 페이징 리스트
 	@Override 
-	public List<Map<String, Object>>freeList(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception {		
-		return freeboardDAO.freeList(map, session, commandMap);
+	public List<Map<String, Object>>freeList(Map<String, Object> map, HttpSession session) throws Exception {		
+		return freeboardDAO.freeList(map, session);
 	}
 	
 	//자유게시글 상세

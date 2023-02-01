@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ include file="/WEB-INF/include/include-header.jspf"%>
-	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="/resources/js/common.js"></script>
+<head>
+<title>소수 자유게시판</title>
+</head>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">	
 <input type="hidden" name="FR_IDX" value="${FR_IDX }">
-<main class="layoutCenter">	
 <table class="board_view">
 	<tbody>
 			<tr>
@@ -62,4 +64,3 @@
 		</tr>
 	</tfoot>
 </table>
-</main> 

@@ -8,14 +8,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Repository;
 
 import second.sosu.common.dao.AbstractDAO;
-import second.sosu.common.domain.CommandMap;
 
 @Repository("freeboardDAO")
 public class FreeBoardDAO extends AbstractDAO {
 	
 	//자유게시글 리스트
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>>freeList(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception {	      
+	public List<Map<String, Object>>freeList(Map<String, Object> map, HttpSession session) throws Exception {	      
 		List<Map<String, Object>> freeList = (List<Map<String, Object>>) selectList("freeboard.freeList", map);		
 		  //프사
 	      for (int i = 0; i < freeList.size(); i++) {

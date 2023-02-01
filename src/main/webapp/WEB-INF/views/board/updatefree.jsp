@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ include file="/WEB-INF/include/include-header.jspf"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<head>
+<title>소수 자유게시판 수정</title>
+</head>
 <div class="container">
 	<h3>게시글 수정하기</h3>
 </div>
-<form id="frm" enctype="multipart/form-data" method="post">
+<form id="frm" name="updateForm" enctype="multipart/form-data" method="post">
 <table class="board_view">
 	<tbody>
 		<tr>
@@ -20,6 +22,7 @@
 			<th scope="row">작성자</th>
 			<td colspan="4"> 
 				${map.M_IDX }
+				<input type="hidden" id="M_IDX" name="M_IDX" value="${map.M_IDX }">
 			</td>
 		</tr>
 		<tr>
@@ -52,13 +55,26 @@
 	<a href="#this" class="btn" id="addFile">파일 추가</a>
 	<a href="#this" class="btn" id="update">수정하기</a>
 </div>
-</form>		
+</form>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>		
 <script type="text/javascript">
-	
+
 	var gfv_count = 1;
 
 	$(document).ready(function() {
 		$("#update").on("click", function(e) { //수정하기 버튼
+			if (document.updateForm.FR_TITLE.value=="") {
+				  alert("제목을 입력하십시요.");
+				  document.updateForm.FR_TITLE.focus();
+				  return false;
+			  }
+		
+			if(document.updateForm.FR_CONTENT.value=="") {
+				  alert("내용을 입력하십시요.");
+				  document.updateForm.FR_CONTENT.focus();
+				  return false;
+			  }
+			
 			e.preventDefault();
 			fn_updatefree();
 		});

@@ -31,7 +31,7 @@ public class FreeBoardController {
 		
 		ModelAndView mv = new ModelAndView("/board/freeboard");
 
-		List<Map<String,Object>> list= freeboardService.freeList(commandMap.getMap(), session, commandMap);	
+		List<Map<String,Object>> list= freeboardService.freeList(commandMap.getMap(), session);	
 		mv.addObject("list",list);
 		mv.addObject("session", session.getAttribute("M_IDX"));
 		
@@ -59,8 +59,7 @@ public class FreeBoardController {
 		
 		commandMap.put("FR_CATEGORY", FR_CATEGORY);
 		
-		ModelAndView mv = new ModelAndView("/board/insertfree");
-		
+		ModelAndView mv = new ModelAndView("/board/insertfree");	
 		String M_NICKNAME = (String)commandMap.get("M_NICKNAME");
 		mv.addObject("M_NICKNAME", M_NICKNAME);
 	
@@ -71,20 +70,16 @@ public class FreeBoardController {
 	@RequestMapping(value="/freeboard/insertfree.sosu") 
 	public ModelAndView insertfree(CommandMap commandMap, HttpSession session) throws Exception {
 		
-		List<Map<String, Object>> list = freeboardService.freeList(commandMap.getMap(), session, commandMap);
+		List<Map<String, Object>> list = freeboardService.freeList(commandMap.getMap(), session);
 		
 		commandMap.put("M_IDX", Integer.parseInt(String.valueOf(session.getAttribute("M_IDX"))));
-		// 개행을 위한...
-		String FR_DETAIL = (String) (commandMap.getMap().replace("\r\n", "<br>"));
-		commandMap.setMap(FR_DETAIL);
 		
-		String cate = list.get(0).get("FR_CATEGORY").toString();// 리스트에서 카테고리 값 스트링으로 가져오기
-		
+		String cate = list.get(0).get("FR_CATEGORY").toString();// 리스트에서 카테고리 값 스트링으로 가져오기		
 		ModelAndView mv = new ModelAndView("redirect:/freeboard/" + cate + ".sosu");
-		
+
 		freeboardService.insertFree(commandMap.getMap(), session);
 			
-		return mv; 
+		return mv;
 	}
 	
 	//자유게시글 수정 폼
@@ -96,7 +91,7 @@ public class FreeBoardController {
 		commandMap.put("FR_IDX", FR_IDX);
 		
 		Map<String, Object> map = freeboardService.freeDetail(commandMap.getMap());	
-		mv.addObject("map", map);	
+		mv.addObject("map", map);
 
 		return mv;
 	}
@@ -108,8 +103,7 @@ public class FreeBoardController {
 		Map<String, Object> map = freeboardService.freeDetail(commandMap.getMap());
 		
 		String idx = map.get("FR_IDX").toString();
-		String cate = map.get("FR_CATEGORY").toString();
-		
+		String cate = map.get("FR_CATEGORY").toString();		
 		ModelAndView mv = new ModelAndView("redirect:/freeboard/" + cate + "/" + idx + ".sosu");
 		
 		freeboardService.updateFree(commandMap.getMap());
@@ -122,9 +116,8 @@ public class FreeBoardController {
 	public ModelAndView deletefree(CommandMap commandMap) throws Exception {
 		
 		Map<String, Object> map = freeboardService.freeDetail(commandMap.getMap());
-		
-		String cate = map.get("FR_CATEGORY").toString();
-		
+
+		String cate = map.get("FR_CATEGORY").toString();		
 		ModelAndView mv = new ModelAndView("/redirect:/freeboard/" + cate + ".sosu");
 	
 		freeboardService.deleteFree(commandMap.getMap());

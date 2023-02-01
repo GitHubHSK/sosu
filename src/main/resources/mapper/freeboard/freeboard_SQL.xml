@@ -64,7 +64,8 @@
 	<!-- 자유게시판 등록 -->
 	<insert id="insertFree" parameterType="hashmap">		
     	INSERT INTO FREE
-        	(M_IDX,
+        	(FR_IDX,
+        	M_IDX,
 			FR_TITLE,
 			FR_CONTENT,
 			FR_CATEGORY,
@@ -83,8 +84,7 @@
             'N',
 			'N',
 			#{FR_WRITER},
-			0,
-            sysdate)
+			0)
 	</insert>
 
 	<!-- 자유게시판 등록의 파일등록 -->

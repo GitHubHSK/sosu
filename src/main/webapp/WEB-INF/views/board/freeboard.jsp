@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ include file="/WEB-INF/include/include-header.jspf"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="/resources/js/common.js"></script>
 <html>
 <head>
 <title>소수 자유게시판</title>
@@ -42,10 +42,14 @@
 		<c:choose>
 			<c:when test="${!empty list }">
 				<c:forEach items="${list }" var="map" >
-					<tr align="center" onclick="location.href='/freeboard/${map.FR_CATEGORY }/${map.FR_IDX }.sosu'" >	
+					<tr align="center">	
 						<td>${map.FR_IDX }</td>
 						<td>${map.F_SVNAME }</td>
-						<td>${map.FR_TITLE }</td>
+						<td>
+							<a href="/freeboard/${map.FR_CATEGORY }/${map.FR_IDX }.sosu">
+							<c:out value="${map.FR_TITLE }"/>
+							</a>
+						</td>
 						<td>${map.M_NICKNAME }</td>
 						<td>${map.FRZ_COUNT }</td>
 						<td>${map.FR_REGDATE }</td>
@@ -63,7 +67,7 @@
 					<td colspan="3">조회된 결과가 없습니다.</td>
 				</tr>
 			</c:otherwise>
-		</c:choose>	
+		</c:choose>
 	</tbody>
 </table>
 </body>

@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ include file="/WEB-INF/include/include-header.jspf"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <title>자유게시판 작성</title>
 </head>
 <body>
-<form id="frm" enctype="multipart/form-data">
+<form id="frm" name="insertForm" enctype="multipart/form-data">
 <table>
 	<caption>게시글등록</caption>
 	<tbody>   
@@ -15,18 +14,20 @@
 			<th>제목</th>
 			<td>
 				<input type="text" id="FR_TITLE" name="FR_TITLE" maxlength="70" placeholder="제목을 입력하세요">
-			</td> 
+			</td>
 		</tr>
 		<tr>
 			<th>카테고리</th>
 			<td>
 				${FR_CATEGORY}
+				<input type="hidden" id="FR_CATEGORY" name="FR_CATEGORY" value="${FR_CATEGORY }">
 			<td>
 		</tr>
 		<tr>
 			<th>작성자</th>
 			<td>
-				${M_IDX }
+				${M_NICKNAME }
+				<input type="hidden" name="FR_WRITER" value="${M_NICKNAME}">
 			</td> 
 		</tr>
 		<tr>
@@ -46,19 +47,28 @@
 <div align="center">	
 	<a href="#this" class="btn" id="addFile">파일 추가</a>
 	<a href="#this" class="btn" id="write">작성하기</a>
-	<input type="hidden" name="FR_CATEGORY" value="${FR_CATEGORY}">
-	<input type="hidden" name="FR_WRITER" value="${M_NICKNAME}">
 	<a href="/freeboard/${FR_CATEGORY}.sosu" class="btn">목록으로</a>
-	<!-- <a href="#this" class="btn" id="list">목록으로</a>-->	
 </div>	
 </form>
-		
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>		
 <script type="text/javascript">
-	
+
 	var gfv_count = 1;
 
 	$(document).ready(function() {
 		$("#write").on("click", function(e) { //작성하기 버튼
+			if (document.insertForm.FR_TITLE.value=="") {
+				  alert("제목을 입력하십시요.");
+				  document.insertForm.FR_TITLE.focus();
+				  return false;
+			  }
+		
+			if(document.insertForm.FR_CONTENT.value=="") {
+				  alert("내용을 입력하십시요.");
+				  document.insertForm.FR_CONTENT.focus();
+				  return false;
+			  }
+			
 			e.preventDefault();
 			fn_insertfree();
 		});
