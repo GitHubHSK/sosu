@@ -35,7 +35,7 @@
 			<th scope="col">제목</th>
 			<th scope="col">작성자</th>
 			<th scope="col">추천</th>
-			<th scope="col">등록날짜</th>
+			<th scope="col">작성일</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -54,10 +54,10 @@
 						<td>${map.FRZ_COUNT }</td>
 						<td>${map.FR_REGDATE }</td>
 						<td>
-						<input type="hidden" name="FR_IDX" value="${map.FR_IDX }">
-						<input type="hidden" name="M_NICKNAME" value="${map.M_NICKNAME }">
-						<input type="hidden" name="FR_CATEGORY" value="${map.FR_CATEGORY }">
-						<input type="hidden" name="M_IDX" value="${map.M_IDX }">
+							<input type="hidden" name="FR_IDX" value="${map.FR_IDX }">
+							<input type="hidden" name="M_NICKNAME" value="${map.M_NICKNAME }">
+							<input type="hidden" name="FR_CATEGORY" value="${map.FR_CATEGORY }">
+							<input type="hidden" name="M_IDX" value="${map.M_IDX }">
 						</td>
 					</tr>
 				</c:forEach>
@@ -69,6 +69,15 @@
 			</c:otherwise>
 		</c:choose>
 	</tbody>
+	<%-- <c:if test="${!empty paginationInfo}">
+		<tfoot>
+			<tr>
+				<td class="paging" colspan="4">
+					<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="paging" />
+				</td>
+			</tr>
+		</tfoot>
+	</c:if> --%>
 </table>
 </body>
 </html>

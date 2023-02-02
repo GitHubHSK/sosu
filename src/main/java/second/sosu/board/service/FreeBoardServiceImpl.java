@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -28,8 +29,7 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	//자유게시글 상세
 	@Override
 	public Map<String, Object>freeDetail(Map<String, Object> map) throws Exception {		
-		Map<String, Object> resultMap = freeboardDAO.freeDetail(map);
-		return resultMap;
+		return freeboardDAO.freeDetail(map);
 	}
 	
 	//자유게시글 작성
@@ -52,7 +52,7 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	
 	//자유게시글 수정
 	@Override
-	public void updateFree(Map<String, Object> map) throws Exception {	
+	public void updateFree(Map<String, Object> map, HttpServletRequest request) throws Exception {	
 		freeboardDAO.updateFree(map);
 	}
 	

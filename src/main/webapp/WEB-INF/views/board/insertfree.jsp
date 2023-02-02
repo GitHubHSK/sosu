@@ -21,13 +21,14 @@
 			<td>
 				${FR_CATEGORY}
 				<input type="hidden" id="FR_CATEGORY" name="FR_CATEGORY" value="${FR_CATEGORY }">
+				<input type="hidden" id="MO_CATEGORY" name="MO_CATEGORY" value="${FR_CATEGORY }">
 			<td>
 		</tr>
 		<tr>
 			<th>작성자</th>
 			<td>
 				${M_NICKNAME }
-				<input type="hidden" name="FR_WRITER" value="${M_NICKNAME}">
+				<input type="hidden" name="FR_WRITER" value="${M_NICKNAME }">
 			</td> 
 		</tr>
 		<tr>
@@ -36,14 +37,19 @@
 				<textarea rows="5" id="FR_CONTENT" name="FR_CONTENT" placeholder="내용을 입력하세요" style="width:500px; height:300px"></textarea>
 			</td> 
 		</tr>
+		<tr>
+			<th scope="row">첨부파일</th>
+			<td>
+				<div id="fileDiv">
+					<p>
+						<input type="file" id="file" name="file_0">
+						<a href="#this" class="btn" id="delete" name="delete">삭제</a>
+					</p>
+				</div>
+			</td>
+		</tr>
 	</tbody>
 </table>
-<div id="fileDiv" align="center">
-	<p>
-		<input type="file" id="file" name="file_0"> 
-		<a href="#this" class="btn" id="delete" name="delete">삭제</a>
-	</p>
-</div>
 <div align="center">	
 	<a href="#this" class="btn" id="addFile">파일 추가</a>
 	<a href="#this" class="btn" id="write">작성하기</a>

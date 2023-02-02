@@ -9,10 +9,10 @@
 	SELECT FR. * , NVL(F.F_SVNAME,0) AS FF_SVNAME, M. *
        	FROM FREE FR, FILE_T F, MEMBER M      
 	WHERE F.F_TABLE(+) = 'F'
-	AND F.F_MAIN_YN(+) ='Y' 
-        	AND FR.FR_DEL_YN(+) = 'N'
-        	AND FR.M_IDX = M.M_IDX
-        	AND F.F_ARTICLE(+) =FR.FR_IDX 
+		AND F.F_MAIN_YN(+) ='Y' 
+        AND FR.FR_DEL_YN(+) = 'N'
+        AND FR.M_IDX = M.M_IDX
+        AND F.F_ARTICLE(+) =FR.FR_IDX 
        	AND FR_CATEGORY = #{MO_CATEGORY}
 	]]>		
 	</select>
@@ -123,7 +123,7 @@
 			F_REG_DATE = sysdate						
 		WHERE 
 			F_IDX = #{F_IDX}
-			and F_TABLE = #{F_TABLE}
+			AND F_TABLE = #{F_TABLE}
 	</update>
 	
 	 <!-- 자유게시판  수정 -->
@@ -137,7 +137,7 @@
 			FR_REGDATE = sysdate								
 		WHERE 
 			FR_IDX = #{FR_IDX}
-			and M_IDX = #{M_IDX}
+			AND M_IDX = #{M_IDX}
 	</update>
 	
 	 <!-- 자유게시판  삭제 -->
@@ -148,7 +148,7 @@
 			FR_DEL_YN = 'Y'										
 		WHERE 
 			FR_IDX = #{FR_IDX}
-			and M_IDX = #{M_IDX}
+			AND M_IDX = #{M_IDX}
 	</update>
 	
 	 <!-- 자유게시판 이미지  삭제 -->

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <head>
 <title>소수 자유게시판 수정</title>
 </head>
@@ -43,14 +42,29 @@
 				<textarea rows="20" cols="100" id="FR_CONTENT" name="FR_CONTENT" placeholder="내용을 입력하세요" style="height:300px">${map.FR_CONTENT }</textarea>
 			</td>
 		</tr>
+		<tr>
+			<th scope="row">첨부파일</th>
+			<td colspan="3">
+				<div id="fileDiv">
+					<!-- varStatus 속성을 이용해 반복자에 대한 정보 변수에 담기 -->
+					<c:forEach var="row" items="${list}" varStatus="var">
+						<p>
+							<!-- 반복자.index 를 사용하여 몇 번째 반복인지 값 담기 -->
+							<input type="hidden" id="IDX" name="IDX_${var.index}" value="${row.IDX}">
+							<a href="#this" id="name_${var.index}" name="name_${var.index}">
+								${row.ORIGINAL_FILE_NAME}
+							</a>
+							<input type="file" id="file_${var.index}" name="file_${var.index}">
+							(${row.FILE_SIZE}kb)
+							<a href="#this" class="btn" id="delete_${var.index}" name="delete_${var.index}">삭제</a>
+							<br>
+						</p>
+					</c:forEach>
+				</div>
+			</td>
 	</tbody>
 </table>
-<div id="fileDiv" align="center">
-	<p>
-		<input type="file" id="file" name="file_0">
-		<a href="#this" class="btn" id="delete" name="delete">삭제</a>
-	</p>
-</div>
+
 <div align="center">
 	<a href="#this" class="btn" id="addFile">파일 추가</a>
 	<a href="#this" class="btn" id="update">수정하기</a>

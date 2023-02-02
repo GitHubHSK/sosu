@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -85,10 +86,11 @@ public class FreeBoardController {
 	//자유게시글 수정 폼
 	@RequestMapping(value="/freeboard/updateForm/{FR_CATEGORY}/{FR_IDX}.sosu")
 	public ModelAndView updatefree(@PathVariable String FR_CATEGORY, @PathVariable int FR_IDX, CommandMap commandMap) throws Exception {	
-		ModelAndView mv = new ModelAndView("/board/updatefree");
 		
 		commandMap.put("FR_CATEGORY", FR_CATEGORY);
 		commandMap.put("FR_IDX", FR_IDX);
+		
+		ModelAndView mv = new ModelAndView("/board/updatefree");
 		
 		Map<String, Object> map = freeboardService.freeDetail(commandMap.getMap());	
 		mv.addObject("map", map);
@@ -98,7 +100,7 @@ public class FreeBoardController {
 	
 	//자유게시글 수정
 	@RequestMapping(value="/freeboard/updatefree.sosu")
-	public ModelAndView updatefree(CommandMap commandMap) throws Exception {
+	public ModelAndView updatefree(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		
 		Map<String, Object> map = freeboardService.freeDetail(commandMap.getMap());
 		
@@ -106,7 +108,7 @@ public class FreeBoardController {
 		String cate = map.get("FR_CATEGORY").toString();		
 		ModelAndView mv = new ModelAndView("redirect:/freeboard/" + cate + "/" + idx + ".sosu");
 		
-		freeboardService.updateFree(commandMap.getMap());
+		freeboardService.updateFree(commandMap.getMap(), request);
 		
 		return mv;
 	}
@@ -116,9 +118,9 @@ public class FreeBoardController {
 	public ModelAndView deletefree(CommandMap commandMap) throws Exception {
 		
 		Map<String, Object> map = freeboardService.freeDetail(commandMap.getMap());
-
-		String cate = map.get("FR_CATEGORY").toString();		
-		ModelAndView mv = new ModelAndView("/redirect:/freeboard/" + cate + ".sosu");
+		
+		String cate = map.get("FR_CATEGORY").toString();
+		ModelAndView mv = new ModelAndView("redirect:/freeboard/" + cate + ".sosu");
 	
 		freeboardService.deleteFree(commandMap.getMap());
 		

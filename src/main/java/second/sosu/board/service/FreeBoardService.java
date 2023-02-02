@@ -3,6 +3,7 @@ package second.sosu.board.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public interface FreeBoardService {
@@ -23,7 +24,7 @@ public interface FreeBoardService {
 	void freeMemberList(Map<String, Object> map, HttpSession session) throws Exception;
 	
 	//자유게시글 수정
-	void updateFree(Map<String, Object> map) throws Exception;
+	void updateFree(Map<String, Object> map, HttpServletRequest request) throws Exception;
 	
 	//자유게시글 사진 파일 수정
 	void updateFreeFile(Map<String, Object> map) throws Exception;
