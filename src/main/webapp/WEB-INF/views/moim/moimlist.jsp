@@ -8,72 +8,18 @@
 <link href="/resources/css/list.css" rel="stylesheet">
 <link href="/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="/resources/assets/vendor/aos/aos.css" rel="stylesheet">
-<link href="/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<%@page import="java.util.*"%>
+<%
+ 
+    request.setCharacterEncoding("UTF-8");
+ 
+%>
 
 <meta charset="UTF-8">
 </head>
 <body>
-<<<<<<< HEAD
 
-	<h1>
-		<input type="text" value="${MO_CATEGORY}" />
-	</h1>
-	<button type="button" onclick="location.href='/moim/moimRegister.sosu'">개설하기</button>
-
-	<table>
-		<thead>
-			<tr align="center">
-				<th>모임번호</th>
-				<th>모임제목</th>
-				<th>모임지역</th>
-				<th>모임상세지역</th>
-				<th>현재참여인원</th>
-				<th>스크랩수</th>
-				<%
-				if (session.getAttribute("M_IDX") != null) {
-				%>
-				<th>스크랩유무</th>
-				<%
-				} else {
-				%>
-				<%
-				}
-				%>
-				<th>파일</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:choose>
-				<c:when test="${fn:length(list) > 0 }">
-					<c:forEach items="${list}" var="m" end="3">
-							 <tr align="center" onclick= "location.href='/moim/${m.MO_CATEGORY}/${m.MO_IDX}.sosu'">
-								<td>${m.MO_IDX}<input type="hidden" name="MO_IDX"
-									value="${m.MO_IDX}"></td>
-								<td>${m.MO_TITLE}<input type="hidden" name="M_IDX"
-									value="${m.M_IDX}"></td>
-								<td>${m.MO_REGION}</td>
-								<td>${m.MO_DETAILREGION}</td>
-								<td>${m.MOMEM_COUNT}</td>
-								<td>${m.MZ_COUNT}</td>
-								<c:if test="${sessionss ne null}">
-									<td>${m.MZ_CHECK}</td>
-								</c:if>
-								<c:if test="${sessionss eq null}">
-								</c:if>
-								<td>${m.MF_SVNAME}</td>
-							</tr>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<tr>
-						<td colspan="4">조회된 결과가 없습니다.</td>
-					</tr>
-				</c:otherwise>
-			</c:choose>
-		</tbody>
-	</table>
-=======
-<input type="hidden" value="${MO_CATEGORY }">
+<input type="hidden" value="${MO_CATEGORY }" id = "cate">
 
 <div class="container" style="margin-top:75px;">
 	<div class="row gy-5" style="margin-bottom: 90px;">
@@ -81,7 +27,7 @@
 		<div class="row gy-5">
 			<div class="col">
 				<div style="float: left; font-size: 14.5px;">
-				<select onchange="location.href=(this.value);">
+				<select onchange="location.href=(this.value);" >
 					<option value="/moim/culture.sosu" <c:if test="${MO_CATEGORY == 'culture'}">selected="selected"</c:if>>문화/예술</option>
 					<option value="/moim/sports.sosu" <c:if test="${MO_CATEGORY == 'sports'}">selected="selected"</c:if>>운동/스포츠</option>
 					<option value="/moim/game.sosu" <c:if test="${MO_CATEGORY == 'game'}">selected="selected"</c:if>>게임/오락</option>
@@ -91,8 +37,12 @@
 				</select>
 			
 					<div class="reg">
-						<span>전체</span> <span>중부</span> <span>동부</span> <span>서부</span> <span>남부</span>
-						<span>북부</span>
+						<input type = "checkbox" name = "MO_REGION" value = "C">중부
+						<input type = "checkbox" name = "MO_REGION" value = "동부">동부
+						<input type = "checkbox" name = "MO_REGION" value = "W">서부
+						<input type = "checkbox" name = "MO_REGION" value = "남부">남부
+						<input type = "checkbox" name = "MO_REGION" value = "북부">북부
+						<button type = "submit" id = "regionSearch" class="mrgbtn">검색</button>
 					</div>
 		
 					<div class="filter">
@@ -157,4 +107,33 @@
    </div>
    </div>
 </body>
+<script>	
+		
+	var cate = $("#cate").val();
+
+	$('#regionSearch').on('click', function() {
+		var regionList = [];
+		
+		$("input[name=MO_REGION]:checked").each(function(i) {
+			regionList.push($(this).val());
+		});
+		var jsonData = JSON.stringify(regionList);
+		console.log(jsonData);console.log(cate);
+		jsonData = encodeURIComponent(jsonData);
+		
+		$.ajax({	
+			url : "/moim/" + cate + ".sosu", 
+			type : "get",
+			data : {MO_REGION : jsonData}, //변수이름 chbox ,변수값: regionList 
+			dataType : 'json',
+			success : function(result) {
+			},
+			
+			error: function (request, status, error) {
+			 alert("실패");
+				
+			}
+		});	
+	});
+</script>
 </html>

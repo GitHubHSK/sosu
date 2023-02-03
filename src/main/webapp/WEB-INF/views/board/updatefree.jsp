@@ -50,13 +50,13 @@
 					<c:forEach var="row" items="${list}" varStatus="var">
 						<p>
 							<!-- 반복자.index 를 사용하여 몇 번째 반복인지 값 담기 -->
-							<input type="hidden" id="IDX" name="IDX_${var.index}" value="${row.IDX}">
-							<a href="#this" id="name_${var.index}" name="name_${var.index}">
-								${row.ORIGINAL_FILE_NAME}
+							<input type="hidden" id="FR_IDX" name="FR_IDX_${var.index }" value="${row.IDX }">
+							<a href="#this" id="name_${var.index }" name="name_${var.index }">
+								${row.F_OGNAME }
 							</a>
-							<input type="file" id="file_${var.index}" name="file_${var.index}">
-							(${row.FILE_SIZE}kb)
-							<a href="#this" class="btn" id="delete_${var.index}" name="delete_${var.index}">삭제</a>
+							<input type="file" id="file_${var.index }" name="file_${var.index }">
+							(${row.F_SIZE }kb)
+							<a href="#this" class="btn" id="delete_${var.index }" name="delete_${var.index }">삭제</a>
 							<br>
 						</p>
 					</c:forEach>
@@ -78,13 +78,13 @@
 	$(document).ready(function() {
 		$("#update").on("click", function(e) { //수정하기 버튼
 			if (document.updateForm.FR_TITLE.value=="") {
-				  alert("제목을 입력하십시요.");
+				  alert("제목을 입력해주세요.");
 				  document.updateForm.FR_TITLE.focus();
 				  return false;
 			  }
 		
 			if(document.updateForm.FR_CONTENT.value=="") {
-				  alert("내용을 입력하십시요.");
+				  alert("내용을 입력해주세요.");
 				  document.updateForm.FR_CONTENT.focus();
 				  return false;
 			  }

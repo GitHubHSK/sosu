@@ -31,13 +31,6 @@ public class FreeBoardDAO extends AbstractDAO {
 	      return freeList;
 	}
 	
-	//프로필 리스트
-	//@SuppressWarnings("unchecked")
-	//public Map<String, Object> freeMemberList(Map<String, Object> map) throws Exception {
-			
-	//return (Map<String, Object>) selectOne("freeboard.freeMemberList", map);
-	//}
-	
 	//자유게시글 상세	 
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> freeDetail(Map<String, Object> map) throws Exception {

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 public interface FreeBoardService {
 	
-	//리뷰 페이징 리스트
+	//자유게시글 리스트
 	List<Map<String, Object>>freeList(Map<String, Object> map, HttpSession session) throws Exception; 
 	
 	//자유게시글 상세

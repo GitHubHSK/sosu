@@ -6,35 +6,43 @@
 	<!-- 자유게시판 -->	
 	<select id="freeList" resultType="hashmap" parameterType="hashmap">
 	<![CDATA[
-	SELECT FR. * , NVL(F.F_SVNAME,0) AS FF_SVNAME, M. *
-       	FROM FREE FR, FILE_T F, MEMBER M      
+	SELECT 
+		FR. * , NVL(F.F_SVNAME,0) AS FF_SVNAME, M. *
+	FROM FREE 
+		FR, FILE_T F, MEMBER M      
 	WHERE F.F_TABLE(+) = 'F'
 		AND F.F_MAIN_YN(+) ='Y' 
         AND FR.FR_DEL_YN(+) = 'N'
         AND FR.M_IDX = M.M_IDX
         AND F.F_ARTICLE(+) =FR.FR_IDX 
        	AND FR_CATEGORY = #{MO_CATEGORY}
+    ORDER BY FR.FR_REGDATE DESC
 	]]>		
 	</select>
 	
 	<!-- 좋아요 수 -->
 	<select id="zzimFree" parameterType="hashmap" resultType="hashmap">
-		SELECT COUNT(Z.Z_ARTICLE) AS FRZ_COUNT
-        		FROM ZZIM Z, FREE F
-       		 WHERE Z.Z_TABLE = 'F'
-        		AND Z.Z_ARTICLE = F.FR_IDX
-        		AND F.FR_IDX = #{FR_IDX}
+		SELECT 
+			COUNT(Z.Z_ARTICLE) AS FRZ_COUNT
+		FROM 
+			ZZIM Z, FREE F
+		WHERE Z.Z_TABLE = 'F'
+        	AND Z.Z_ARTICLE = F.FR_IDX
+        	AND F.FR_IDX = #{FR_IDX}
 	</select>
 	
+	<!-- 본인이 좋아요 눌렀는지 유무 -->
 	<select id="freeZzimCheck" parameterType="hashmap" resultType="hashmap">
       	<![CDATA[
-      	SELECT COUNT(Z_IDX) AS FZ_CHECK
-      	FROM ZZIM Z, FREE FR, MEMBER M
+      	SELECT 
+      		COUNT(Z_IDX) AS FZ_CHECK
+      	FROM 
+      		ZZIM Z, FREE FR, MEMBER M
       	WHERE Z.M_IDX = M.M_IDX
-      	AND FR.FR_IDX = Z.Z_ARTICLE
-      	AND Z.Z_TABLE = 'F'
-      	AND FR.FR_IDX = #{FR_IDX}
-      	AND M.M_IDX = #{M_IDX}
+      		AND FR.FR_IDX = Z.Z_ARTICLE
+      		AND Z.Z_TABLE = 'F'
+      		AND FR.FR_IDX = #{FR_IDX}
+      		AND M.M_IDX = #{M_IDX}
       	]]>
 	</select>
 	
@@ -42,22 +50,24 @@
 	<select id="freeMemberList" resultType="hashmap" parameterType="hashmap">
 	<![CDATA[
 		SELECT NVL(F.F_SVNAME,0) AS PROFILE
-       		FROM MEMBER M, FILE_T F
-        		WHERE F.F_TABLE(+) = 'P'
-        		AND F.F_ARTICLE(+) = M.M_IDX
-        		AND M.M_IDX = #{M_IDX}
+		FROM 
+			MEMBER M, FILE_T F
+        WHERE F.F_TABLE(+) = 'P'
+        	AND F.F_ARTICLE(+) = M.M_IDX
+        	AND M.M_IDX = #{M_IDX}
 	]]>		
 	</select>
 	
 	<!-- 자유게시글 상세 -->
 	<select id="freeDetail" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
-		SELECT  FR.*, NVL2(F.F_SVNAME,1,0) AS F_SVNAME
-        		FROM FREE FR, FILE_T F      
-        		WHERE FR.FR_IDX = #{FR_IDX}
-        		AND F.F_ARTICLE(+) = FR.FR_IDX 
-        		AND FR_DEL_YN = 'N'
-        		AND F.F_TABLE(+) = 'F'
+		SELECT FR.*, NVL2(F.F_SVNAME,1,0) AS F_SVNAME
+		FROM 
+			FREE FR, FILE_T F      
+       	WHERE FR.FR_IDX = #{FR_IDX}
+       		AND F.F_ARTICLE(+) = FR.FR_IDX 
+       		AND FR_DEL_YN = 'N'
+       		AND F.F_TABLE(+) = 'F'
 	]]>
 	</select>
 	

@@ -1,0 +1,33 @@
+.board_view {
+	width: 100%;
+	border-top: 1px solid #555;
+}
+
+.contents {
+	padding: 30px;
+	margin-bottom: 169px;
+	overflow: hidden;
+	font-size: 14px;
+	line-height: 22px;
+	word-break: break-all;
+}
+
+.board_view ul li span.subject {
+	font-weight: 600;
+	color: #333;
+	width: 90px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	margin: 0;
+	padding: 0 10px;
+	vertical-align: middle;
+}
+
+.board_view ul li span.txt {
+	border-left: #CCC 1px dotted;
+	margin-left: 89px;
+	padding-left: 15px;
+	height: auto;
+	min-height: 22px;
+}

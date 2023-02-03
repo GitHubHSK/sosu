@@ -53,7 +53,7 @@
 <div align="center">	
 	<a href="#this" class="btn" id="addFile">파일 추가</a>
 	<a href="#this" class="btn" id="write">작성하기</a>
-	<a href="/freeboard/${FR_CATEGORY}.sosu" class="btn">목록으로</a>
+	<a href="/freeboard/${FR_CATEGORY }.sosu" class="btn">목록으로</a>
 </div>	
 </form>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>		
@@ -64,13 +64,13 @@
 	$(document).ready(function() {
 		$("#write").on("click", function(e) { //작성하기 버튼
 			if (document.insertForm.FR_TITLE.value=="") {
-				  alert("제목을 입력하십시요.");
+				  alert("제목을 입력해주세요.");
 				  document.insertForm.FR_TITLE.focus();
 				  return false;
 			  }
 		
 			if(document.insertForm.FR_CONTENT.value=="") {
-				  alert("내용을 입력하십시요.");
+				  alert("내용을 입력해주세요.");
 				  document.insertForm.FR_CONTENT.focus();
 				  return false;
 			  }
