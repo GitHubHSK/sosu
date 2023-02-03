@@ -9,25 +9,11 @@
 	pageContext.setAttribute("br", "<br>");
 	%>
 
-	<input type="hidden" name="MO_IDX" value="${MO_IDX}" id="MO_IDX">
-	<main class="layoutCenter">
+<input type="hidden" name="MO_IDX" value="${MO_IDX}" id="MO_IDX">
+<main class="layoutCenter">
 		<div align="center">
 			<h1>모임 디테일</h1>
 		</div>
-=======
-<%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<link href="/resources/css/detail.css" rel="stylesheet">
-
-<body>
-<%   //개행을 위한..(구현X)
-      pageContext.setAttribute("crcn", "\r\n");
-      pageContext.setAttribute("br", "<br>"); 
-%> 
-
 <div class="container" style="text-align: center; width: 1000px; margin: 50px auto;">
 
 <input type="hidden" name = "MO_IDX" value="${MO_IDX}">
