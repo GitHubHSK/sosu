@@ -1,16 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/WEB-INF/include/include-header.jspf"%>
 <script src="/resources/js/common.js"></script>
 <html>
 <head>
 <link href="/resources/css/list.css" rel="stylesheet">
 <link href="/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="/resources/assets/vendor/aos/aos.css" rel="stylesheet">
-<%@page import="java.util.*"%>
-<%
-    request.setCharacterEncoding("UTF-8"); 
-%>
 
 <meta charset="UTF-8">
 <title>소수 자유게시판</title>
@@ -18,7 +15,7 @@
 <main>
 	<article>
 		<input type="hidden" value="${FR_CATEGORY }" id = "cate">
-	
+
 		<div class="container" style="margin-top:75px;">
 		<div class="row gy-5" style="margin-bottom: 90px;">
 			<div class="container">
@@ -33,7 +30,7 @@
 						<option value="/freeboard/food.sosu" <c:if test="${FR_CATEGORY == 'food' }">selected="selected"</c:if>>음식</option>
 						<option value="/freeboard/etc.sosu" <c:if test="${FR_CATEGORY == 'etc' }">selected="selected"</c:if>>기타</option>
 					</select>
-					<%-- <form action="/freeboard/${FR_CATEGORY }.sosu" method="post">
+					<form action="/freeboard/${FR_CATEGORY }.sosu" method="post" a>
 						<select name="searchType">
 							<option value="A">전체</option>
 							<option value="T">제목</option>
@@ -41,7 +38,7 @@
 						</select>
 							<input type="text" class="form-control" placeholder="검색어 입력" name="keyword" maxlength="100">
 							<input class="btn" type="submit" value="검색">
-					</form>	 --%>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -70,6 +67,7 @@
 					<p></p>
 					<p class="moim-title">${map.FR_TITLE}
 					<span class="detail-writer">${map.FR_WRITER}</span></p>
+					 <hr style="width:300px;">
 					<span class="hhh">♡</span>
 				</div>
 				</div>

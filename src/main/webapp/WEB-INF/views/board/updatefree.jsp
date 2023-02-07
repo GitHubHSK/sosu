@@ -42,7 +42,7 @@
 				<textarea rows="20" cols="100" id="FR_CONTENT" name="FR_CONTENT" placeholder="내용을 입력하세요" style="height:300px">${map.FR_CONTENT }</textarea>
 			</td>
 		</tr>
-		<tr>
+		<%-- <tr>
 			<th scope="row">첨부파일</th>
 			<td colspan="3">
 				<div id="fileDiv">
@@ -50,7 +50,7 @@
 					<c:forEach var="row" items="${list}" varStatus="var">
 						<p>
 							<!-- 반복자.index 를 사용하여 몇 번째 반복인지 값 담기 -->
-							<input type="hidden" id="FR_IDX" name="FR_IDX_${var.index }" value="${row.IDX }">
+							<input type="hidden" id="F_ARTICLE" name="F_ARTICLE_${var.index }" value="${row.F_ARTICLE }">
 							<a href="#this" id="name_${var.index }" name="name_${var.index }">
 								${row.F_OGNAME }
 							</a>
@@ -62,6 +62,7 @@
 					</c:forEach>
 				</div>
 			</td>
+		</tr> --%>
 	</tbody>
 </table>
 

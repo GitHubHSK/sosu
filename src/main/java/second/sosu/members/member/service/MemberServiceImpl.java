@@ -21,12 +21,24 @@ public class MemberServiceImpl implements MemberService{
    @Resource(name="fileUtils")
    private FileUtils fileUtils;
    
- //아이디 중복 체크
+   //비밀번호 체크
+   @Override
+   public Map<String, Object> checkPassword(Map<String, Object> map) throws Exception {
+      return memberDAO.checkPassword(map);
+   }
+
+   //아이디 중복 체크
    @Override
    public int checkId(Map<String, Object> map) throws Exception {
       return memberDAO.checkId(map);
    }
    
+   //닉네임 중복 체크
+   @Override
+   public int checkNickname(Map<String, Object> map) throws Exception {
+         return memberDAO.checkNickname(map);
+   }
+
    //회원가입
    @Override
    public void join(Map<String, Object> map) throws Exception {
@@ -66,17 +78,6 @@ public class MemberServiceImpl implements MemberService{
    //마이페이지 수정
    @Override
    public void mypageModify(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception {
-      
-//      if(map.get("DELETE").toString().equals("1")) {
-//         memberDAO.profileUpdate(fileUtils.profileInsert(map, request));
-//      }else {
-//         if(request!=null) {
-//            List<Map<String,Object>> list = fileUtils.profileUpdate(map, request);
-//            for(int i=0,size=list.size() ; i<size ; i++) {
-//               memberDAO.profileUpdate(list.get(i));
-//            }
-//         }
-//      }
       if(map.get("GenderCheck").toString().equals("0")==false) {
          memberDAO.profileUpdate(fileUtils.profileInsert(map, request));
       }else {
@@ -87,13 +88,10 @@ public class MemberServiceImpl implements MemberService{
             }
          }
       }
-
       memberDAO.mypageModify(map);
-
    }
 
-   
-   //탈퇴하기
+//탈퇴하기
    @Override
    public void mypageDelete(Map<String, Object> map) throws Exception {
       memberDAO.mypageDelete(map);
@@ -117,54 +115,45 @@ public class MemberServiceImpl implements MemberService{
    public void mypagePrivate(Map<String, Object> map) throws Exception {
       memberDAO.mypagePrivate(map);
    }
+   
+   //신고 작성
+   @Override
+   public void insertReport(Map<String, Object> map) throws Exception {
+      memberDAO.insertReport(map);
+   }
+   
+   //찜 삭제
+   @Override
+   public void deleteZzim(Map<String, Object> map) throws Exception {
+      memberDAO.deleteZzim(map);
+   }
+   
+   //관리자 - 회원 기본 리스트: 페이징 이후
+   @Override
+   public Map<String, Object> adminMemberList(Map<String, Object> map) throws Exception {
+   	return memberDAO.adminMemberList(map);
+   }
 
-	@Override
-	public void insertReport(Map<String, Object> map) throws Exception {
-		memberDAO.insertReport(map);
-	}
-	
-	@Override
-	public void deleteZzim(Map<String, Object> map) throws Exception {
-		memberDAO.deleteZzim(map);
-	}
-	
-	
-	
-	
-	
-
-	//관리자 - 회원 기본 리스트
-	@Override
-	public List<Map<String, Object>> adminMemberList(Map<String,Object> map) throws Exception {
-		return memberDAO.adminMemberList(map);
-	}
-	
-	//관리자 - 회원 상세보기, 신고내역
-	@Override
-	public List<Map<String, Object>> adminMemberDetail(Map<String,Object> map) throws Exception {
-		return memberDAO.adminMemberDetail(map);
-	}
+   //관리자 - 회원 상세보기, 신고내역
+   @Override
+   public List<Map<String, Object>> adminMemberDetail(Map<String,Object> map) throws Exception {
+      return memberDAO.adminMemberDetail(map);
+   }
    
-	//관리자 - 회원 상세보기, 신고내역
-	@Override
-	public List<Map<String, Object>> adminMemberReport(Map<String,Object> map) throws Exception {
-		return memberDAO.adminMemberReport(map);
-	}
-	
-	//관리자 - 신고 내역 삭제
-	@Override
-	public void adminMemberReportDelete(Map<String, Object> map) throws Exception {
-		memberDAO.adminMemberReportDelete(map);
-	}
+   //관리자 - 회원 상세보기, 신고내역
+   @Override
+   public List<Map<String, Object>> adminMemberReport(Map<String,Object> map) throws Exception {
+      return memberDAO.adminMemberReport(map);
+   }
    
-	//관리자 - 회원 정지
-	@Override
-	public void adminMemberStop(Map<String, Object> map) throws Exception {
-		memberDAO.adminMemberStop(map);
-	}
+   //관리자 - 신고 내역 삭제
+   @Override
+   public void adminMemberReportDelete(Map<String, Object> map) throws Exception {
+      memberDAO.adminMemberReportDelete(map);
+   }
    
-   
-   
-   
-   
-}
+   //관리자 - 회원 정지
+   @Override
+   public void adminMemberStop(Map<String, Object> map) throws Exception {
+      memberDAO.adminMemberStop(map);
+   }}

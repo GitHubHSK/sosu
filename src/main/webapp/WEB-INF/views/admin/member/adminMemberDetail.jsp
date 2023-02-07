@@ -21,6 +21,8 @@ $(document).ready(function(){
       var report_content = $(this).parent();
       //td 태그 안의 ridx 찾기
       var report_ridx = report_content.find("#ridx").val();
+      console.log(report_content);
+      console.log(report_ridx);
       $.ajax({ url : "/admin/reportdelete.sosu", type: "post", contentType: "application/json",data : JSON.stringify({R_IDX : report_ridx}), dataType:'json', 
     	  success :function(result, status, xhr) { if (result == 0) {alert("성공적으로 삭제되었습니다."); report_content.parents("#member").css("background-color", "black"); //삭제 클릭 시, css 주는 것! 나중에 변경하면 댐~
       		} else {alert("삭제할 수 없습니다.")}}, error : function(){alert("서버요청실패!!!")}});});

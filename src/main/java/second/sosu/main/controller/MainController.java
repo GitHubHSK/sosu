@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -39,9 +40,13 @@ public class MainController {
 	 */
 
 	@RequestMapping(value = "/main.sosu")
-	public String main() {
-		
-		return "main_layout";
+	public String main(HttpSession session) {
+		if(session.getAttribute("M_TYPE") != null) {
+			if(session.getAttribute("M_TYPE").equals("A")) {
+				return "redirect:/admin/memberlist.sosu";
+			}
+		}
+		 return "main_layout";
 	}
 	
 	@RequestMapping( "/{MO_CATEGORY}.sosu")

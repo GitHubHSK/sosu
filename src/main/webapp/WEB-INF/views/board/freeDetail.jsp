@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="/resources/js/common.js"></script>
 <head>
+<!-- <link href="/resources/css/free.css" rel="stylesheet">
+<link href="/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/assets/vendor/aos/aos.css" rel="stylesheet"> -->
+
 <title>소수 자유게시판</title>
 </head>
 <main>
@@ -32,19 +36,6 @@
 							<th scope="row">내용</th> 
 							<td colspan="3" style="white-space: pre-wrap;">${map.FR_CONTENT }</td>
 						</tr>
-						 <%-- <tr> 
-			 				<th scope="row">첨부파일</th>
-							<td colspan="3"> 
-			 					<c:forEach var="row" items="${!empty map }"> 
-			 						<div> 
-			 							<input type="hidden" id="F_ARTICLE" value="${row.F_ARTICLE }"> 
-			 							<a href="#this" name="file">${row.F_SVNAME }</a> 					
-			 						(${row.F_SIZE}kb)<br> 
-			 						</div> 
-			 					</c:forEach> 				
-							</td> 
-			 			</tr> --%>
-			 			<c:if test="${map.F_SVNAME ne null }"> 
 			 			<tr>
 							<th scope="row">첨부파일</th>
 							<td colspan="3">
@@ -57,7 +48,6 @@
 								</c:forEach>
 							</td>
 						</tr>
-						</c:if> 
 				</tbody>
 				<tfoot>
 					<tr>

@@ -29,5 +29,9 @@ $(document).ready(function(){
 });
 
 
-
-
+function reportPopup() {
+    var popUrl = "/members/insertreport.sosu";
+    var blank = "_blank";
+    var popOption ="top=10, left=120, width=600, height=600, status=no, menubar=no, toolbar=no, resizable=no, location=no";
+    window.open(popUrl, blank , popOption);
+} 

@@ -96,6 +96,22 @@
 			#{FR_WRITER},
 			0)
 	</insert>
+	
+	<!-- 자유게시판 파일 리스트 -->
+	<select id="freefileList" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT
+			F_IDX,
+			F_OGNAME,
+			ROUND(F_SIZE/1024, 1) AS F_SIZE
+		FROM
+			FILE_T
+		WHERE
+    		F_ARTICLE = (SELECT FR_IDX FROM FREE WHERE M_IDX = #{M_IDX} AND FR_DEL_YN = 'N')
+    		AND F_TABLE = 'F'
+			AND F_DEL_YN = 'N'
+	]]>
+	</select>
 
 	<!-- 자유게시판 등록의 파일등록 -->
 	<insert id="insertFreeFile" parameterType="hashmap">
@@ -136,7 +152,7 @@
 			AND F_TABLE = #{F_TABLE}
 	</update>
 	
-	 <!-- 자유게시판  수정 -->
+	 <!-- 자유게시판 수정 -->
 	<update id="updateFree" parameterType="hashmap">
 		UPDATE 
 			FREE
@@ -150,7 +166,7 @@
 			AND M_IDX = #{M_IDX}
 	</update>
 	
-	 <!-- 자유게시판  삭제 -->
+	 <!-- 자유게시판 삭제 -->
 	<update id="deleteFree" parameterType="hashmap">
 		UPDATE 
 			FREE	
@@ -161,7 +177,7 @@
 			AND M_IDX = #{M_IDX}
 	</update>
 	
-	 <!-- 자유게시판 이미지  삭제 -->
+	 <!-- 자유게시판 이미지 삭제 -->
 	<update id="deleteFreeFile" parameterType="hashmap">
 		UPDATE 
 			FILE_T	
@@ -171,4 +187,34 @@
 			F_TABLE = 'F'
 			F_ARTICLE = #{F_ARTICLE}				
 	</update>
+	
+	<!-- 자유게시판 검색 -->
+	<select id="freeSearch" parameterType="hashmap" resultType= "hashmap">
+		SELECT 
+			* 
+		FROM 
+			FREE
+		WHERE (
+		<trim prefixOverrides="AND">
+			<if test="FR_DEL_YN == 'Y'.toString()">
+				AND FR_DEL_YN = 'Y'
+			</if>
+			<if test="FR_DEL_YN != 'Y'.toString()">
+				AND FR_DEL_YN = 'N'
+			</if>
+			<choose>
+				<when test="searchType == 'T'.toString()">
+					AND (FR_TITLE like '%' || #{keyword} || '%')
+				</when>
+				<when test="searchType == 'C'.toString()">
+					AND (FR_CONTENT like '%' || #{keyword} || '%')
+				</when>
+				<when test="searchType == 'A'.toString()">
+					AND ((FR_TITLE like '%' || #{keyword} || '%') OR (FR_CONTENT like '%' || #{keyword} || '%'))
+				</when>
+			</choose>
+		</trim>
+		) 
+		ORDER BY FR_REGDATE DESC
+	</select> 
 </mapper>

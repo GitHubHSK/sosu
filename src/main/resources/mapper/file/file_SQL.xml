@@ -16,6 +16,15 @@
         AND M.M_IDX = #{M_IDX}
 			]]>
 	</select>
-
+	
+	<!-- 이미지 등록하기 -->
+   <insert id="imgInsert" parameterType="hashmap">
+       <![CDATA[
+      INSERT INTO FILE_T(F_IDX, F_TABLE, F_ARTICLE, F_OGNAME, F_SVNAME, F_SIZE,
+      F_MAIN_YN, F_DEL_YN, F_REG_DATE)
+      VALUES (F_IDX.NEXTVAL, #{F_TABLE}, #{F_ARTICLE}, #{F_OGNAME}, #{F_SVNAME},
+      #{F_SIZE}, #{F_MAIN_YN}, 'N', SYSDATE)
+       ]]>
+   </insert>
 </mapper>
 	
