@@ -71,6 +71,7 @@ public interface MemberService {
    
    //관리자 - 회원정지
    public void adminMemberStop(Map<String, Object> map) throws Exception;
-      
-
+   
+   //관리자 - 회원 검색
+   Map<String, Object>memberSearch(Map<String, Object> map) throws Exception;
 }

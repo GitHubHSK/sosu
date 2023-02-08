@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Repository;
 
 import second.sosu.common.dao.AbstractDAO;
@@ -204,4 +202,10 @@ public class MemberDAO extends AbstractDAO{
    public void adminMemberReportDelete(Map<String,Object> map) throws Exception{
       update("members.adminMemberReportDelete",map);
    }
+   
+   // 관리자 - 회원 검색
+   @SuppressWarnings("unchecked") 
+   public Map<String, Object>memberSearch(Map<String, Object> map) throws Exception {
+	  return(Map<String, Object>)selectPagingList("members.memberSearch", map);
+ 	}
 }

@@ -420,6 +420,39 @@ WHERE
     ]]>
    </update>
    
+   <!-- 관리자 - 회원 검색 -->
+   <select id="memberSearch" parameterType="hashmap" resultType= "hashmap">
+		SELECT 
+			* 
+		FROM 
+			MEMBER
+		WHERE (
+		<trim prefixOverrides="AND">
+			<if test="M_DEL_YN == 'Y'.toString()">
+				AND M_DEL_YN = 'Y'
+			</if>
+			<if test="M_DEL_YN != 'Y'.toString()">
+				AND M_DEL_YN = 'N'
+			</if>
+			<choose>
+				<when test="searchType == 'E'.toString()">
+					AND (M_EMAIL like '%' || #{keyword} || '%')
+				</when>
+				<when test="searchType == 'N'.toString()">
+					AND ( M_NAME like '%' || #{keyword} || '%')
+				</when>
+				<when test="searchType == 'D'.toString()">
+					AND (M_DEL_YN like '%' || #{keyword} || '%')
+				</when>
+				<when test="searchType == 'A'.toString()">
+					AND ((M_EMAIL like '%' || #{keyword} || '%') OR (M_NAME like '%' || #{keyword} || '%') OR (M_DEL_YN like '%' || #{keyword} || '%'))
+				</when>
+			</choose>
+		</trim>
+		) 
+		ORDER BY M_IDX DESC
+	</select>
+   
    <!-- 찜 삭제 --> 
    <update id="deleteZzim" parameterType="hashmap">
    <![CDATA[

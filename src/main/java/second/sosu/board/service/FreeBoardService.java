@@ -28,4 +28,7 @@ public interface FreeBoardService {
 	
 	//자유게시판 검색
 	List<Map<String, Object>>freeSearch(Map<String, Object> map) throws Exception;
+	
+	//자유게시판 찜
+	int zzim(Map<String, Object> map, HttpSession session) throws Exception;
 }

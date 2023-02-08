@@ -20,44 +20,6 @@
 	]]>		
 	</select>
 	
-	<!-- 좋아요 수 -->
-	<select id="zzimFree" parameterType="hashmap" resultType="hashmap">
-		SELECT 
-			COUNT(Z.Z_ARTICLE) AS FRZ_COUNT
-		FROM 
-			ZZIM Z, FREE F
-		WHERE Z.Z_TABLE = 'F'
-        	AND Z.Z_ARTICLE = F.FR_IDX
-        	AND F.FR_IDX = #{FR_IDX}
-	</select>
-	
-	<!-- 본인이 좋아요 눌렀는지 유무 -->
-	<select id="freeZzimCheck" parameterType="hashmap" resultType="hashmap">
-      	<![CDATA[
-      	SELECT 
-      		COUNT(Z_IDX) AS FZ_CHECK
-      	FROM 
-      		ZZIM Z, FREE FR, MEMBER M
-      	WHERE Z.M_IDX = M.M_IDX
-      		AND FR.FR_IDX = Z.Z_ARTICLE
-      		AND Z.Z_TABLE = 'F'
-      		AND FR.FR_IDX = #{FR_IDX}
-      		AND M.M_IDX = #{M_IDX}
-      	]]>
-	</select>
-	
-	<!-- 자유게시판 프로필 -->	
-	<select id="freeMemberList" resultType="hashmap" parameterType="hashmap">
-	<![CDATA[
-		SELECT NVL(F.F_SVNAME,0) AS PROFILE
-		FROM 
-			MEMBER M, FILE_T F
-        WHERE F.F_TABLE(+) = 'P'
-        	AND F.F_ARTICLE(+) = M.M_IDX
-        	AND M.M_IDX = #{M_IDX}
-	]]>		
-	</select>
-	
 	<!-- 자유게시글 상세 -->
 	<select id="freeDetail" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
@@ -97,8 +59,45 @@
 			0)
 	</insert>
 	
+	<!-- 자유게시판 수정 -->
+	<update id="updateFree" parameterType="hashmap">
+		UPDATE 
+			FREE
+		SET 
+			FR_TITLE = #{FR_TITLE},
+			FR_CONTENT = #{FR_CONTENT},
+			RE_MOD_YN = 'Y',
+			FR_REGDATE = sysdate								
+		WHERE 
+			FR_IDX = #{FR_IDX}
+			AND M_IDX = #{M_IDX}
+	</update>
+	
+	<!-- 자유게시판 삭제 -->
+	<update id="deleteFree" parameterType="hashmap">
+		UPDATE 
+			FREE	
+		SET 
+			FR_DEL_YN = 'Y'										
+		WHERE 
+			FR_IDX = #{FR_IDX}
+			AND M_IDX = #{M_IDX}
+	</update>
+	
+	<!-- 자유게시판 프로필 -->	
+	<select id="freeMemberList" resultType="hashmap" parameterType="hashmap">
+	<![CDATA[
+		SELECT NVL(F.F_SVNAME,0) AS PROFILE
+		FROM 
+			MEMBER M, FILE_T F
+        WHERE F.F_TABLE(+) = 'P'
+        	AND F.F_ARTICLE(+) = M.M_IDX
+        	AND M.M_IDX = #{M_IDX}
+	]]>		
+	</select>
+	
 	<!-- 자유게시판 파일 리스트 -->
-	<select id="freefileList" parameterType="hashmap" resultType="hashmap">
+	<select id="freeFileList" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
 		SELECT
 			F_IDX,
@@ -107,13 +106,13 @@
 		FROM
 			FILE_T
 		WHERE
-    		F_ARTICLE = (SELECT FR_IDX FROM FREE WHERE M_IDX = #{M_IDX} AND FR_DEL_YN = 'N')
+    		F_ARTICLE = (SELECT FR_IDX FROM FREE WHERE FR_DEL_YN = 'N')
     		AND F_TABLE = 'F'
 			AND F_DEL_YN = 'N'
 	]]>
 	</select>
 
-	<!-- 자유게시판 등록의 파일등록 -->
+	<!-- 자유게시판 파일등록 -->
 	<insert id="insertFreeFile" parameterType="hashmap">
 		INSERT INTO FREE
 	       	(F_IDX,
@@ -151,33 +150,8 @@
 			F_IDX = #{F_IDX}
 			AND F_TABLE = #{F_TABLE}
 	</update>
-	
-	 <!-- 자유게시판 수정 -->
-	<update id="updateFree" parameterType="hashmap">
-		UPDATE 
-			FREE
-		SET 
-			FR_TITLE = #{FR_TITLE},
-			FR_CONTENT = #{FR_CONTENT},
-			RE_MOD_YN = 'Y',
-			FR_REGDATE = sysdate								
-		WHERE 
-			FR_IDX = #{FR_IDX}
-			AND M_IDX = #{M_IDX}
-	</update>
-	
-	 <!-- 자유게시판 삭제 -->
-	<update id="deleteFree" parameterType="hashmap">
-		UPDATE 
-			FREE	
-		SET 
-			FR_DEL_YN = 'Y'										
-		WHERE 
-			FR_IDX = #{FR_IDX}
-			AND M_IDX = #{M_IDX}
-	</update>
-	
-	 <!-- 자유게시판 이미지 삭제 -->
+
+	 <!-- 자유게시판 파일 삭제 -->
 	<update id="deleteFreeFile" parameterType="hashmap">
 		UPDATE 
 			FILE_T	
@@ -216,5 +190,41 @@
 		</trim>
 		) 
 		ORDER BY FR_REGDATE DESC
-	</select> 
+	</select>
+	 
+	<!-- 좋아요 -->
+	<update id="zzim" parameterType="hashmap">
+		UPDATE
+			FREE
+		SET
+			FR_COUNT = FR_COUNT + 1
+		WHERE
+			FR_IDX = #{FR_IDX}
+	</update>
+	
+	<!-- 좋아요 수 -->
+	<select id="zzimFree" parameterType="hashmap" resultType="hashmap">
+		SELECT 
+			COUNT(Z.Z_ARTICLE) AS FRZ_COUNT
+		FROM 
+			ZZIM Z, FREE F
+		WHERE Z.Z_TABLE = 'F'
+        	AND Z.Z_ARTICLE = F.FR_IDX
+        	AND F.FR_IDX = #{FR_IDX}
+	</select>
+	
+	<!-- 본인이 좋아요 눌렀는지 유무 -->
+	<select id="freeZzimCheck" parameterType="hashmap" resultType="hashmap">
+      	<![CDATA[
+      	SELECT 
+      		COUNT(Z_IDX) AS FZ_CHECK
+      	FROM 
+      		ZZIM Z, FREE FR, MEMBER M
+      	WHERE Z.M_IDX = M.M_IDX
+      		AND FR.FR_IDX = Z.Z_ARTICLE
+      		AND Z.Z_TABLE = 'F'
+      		AND FR.FR_IDX = #{FR_IDX}
+      		AND M.M_IDX = #{M_IDX}
+      	]]>
+	</select>
 </mapper>

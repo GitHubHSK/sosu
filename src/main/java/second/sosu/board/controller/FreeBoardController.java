@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import second.sosu.board.service.FreeBoardService;
@@ -44,14 +44,15 @@ public class FreeBoardController {
 	//자유게시글 상세
 	@RequestMapping(value="/freeboard/{FR_CATEGORY}/{FR_IDX}.sosu")
 	public ModelAndView freeDetail(@PathVariable String FR_CATEGORY, @PathVariable int FR_IDX, CommandMap commandMap) throws Exception {	
-			
+		
 		commandMap.put("FR_CATEGORY", FR_CATEGORY);
 		commandMap.put("FR_IDX", FR_IDX);
 		
 		ModelAndView mv = new ModelAndView("/board/freeDetail");
-			
+		
 		Map<String,Object> map = freeboardService.freeDetail(commandMap.getMap());	
-		mv.addObject("map", map);	
+		mv.addObject("map", map.get("map")); //기존의 게시글 상세정보
+		mv.addObject("list", map.get("list")); //첨부파일의 목록
 
 		return mv;
 	}
@@ -71,11 +72,10 @@ public class FreeBoardController {
 	
 	//자유게시글 작성
 	@RequestMapping(value="/freeboard/insertfree.sosu") 
-	public ModelAndView insertfree(@RequestParam("FR_CATEGORY") String FR_CATEGORY,CommandMap commandMap, HttpSession session, HttpServletRequest request) throws Exception {
-		 // ajax로 받아오기 위해 @RequestParam 사용
+	public ModelAndView insertfree(String FR_CATEGORY,CommandMap commandMap, HttpSession session, HttpServletRequest request) throws Exception {
 
 		commandMap.put("M_IDX", Integer.parseInt(String.valueOf(session.getAttribute("M_IDX"))));
-		System.out.println(session.getAttribute("M_IDX"));
+
 		ModelAndView mv = new ModelAndView("redirect:/freeboard/" + FR_CATEGORY + ".sosu");
 
 		freeboardService.insertFree(commandMap.getMap(), session, request);
@@ -93,7 +93,8 @@ public class FreeBoardController {
 		ModelAndView mv = new ModelAndView("/board/updatefree");
 		
 		Map<String, Object> map = freeboardService.freeDetail(commandMap.getMap());	
-		mv.addObject("map", map);
+		mv.addObject("map", map.get("map"));
+		mv.addObject("list", map.get("list"));
 
 		return mv;
 	}
@@ -141,5 +142,15 @@ public class FreeBoardController {
 		mv.addObject("list", list);
 	  	
 		return mv; 
+	}
+	
+	//자유게시판 찜
+	@RequestMapping(value="freeboard/zzim.sosu")
+	@ResponseBody
+	public int zzim(CommandMap commandMap, HttpSession session) throws Exception {
+		
+		int result = freeboardService.zzim(commandMap.getMap(), session);
+		
+		return result;
 	}
 }

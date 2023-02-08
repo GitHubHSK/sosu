@@ -42,7 +42,7 @@
 				<textarea rows="20" cols="100" id="FR_CONTENT" name="FR_CONTENT" placeholder="내용을 입력하세요" style="height:300px">${map.FR_CONTENT }</textarea>
 			</td>
 		</tr>
-		<%-- <tr>
+		<tr>
 			<th scope="row">첨부파일</th>
 			<td colspan="3">
 				<div id="fileDiv">
@@ -62,7 +62,7 @@
 					</c:forEach>
 				</div>
 			</td>
-		</tr> --%>
+		</tr>
 	</tbody>
 </table>
 

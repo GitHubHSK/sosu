@@ -63,17 +63,17 @@ public class FreeBoardDAO extends AbstractDAO {
 		return (List<Map<String, Object>>)selectList("freeboard.freeFileList", map);
 	}
 	
-	//자유게시글 이미지 파일 등록
+	//자유게시글 파일 등록
 	public void insertFreeFile(Map<String, Object> map) throws Exception {		
 		insert("freeboard.insertFreeFile", map);
 	}
 
-	//자유게시글 이미지 파일 수정
+	//자유게시글 파일 수정
 	public void updateFreeFile(Map<String, Object> map) throws Exception {		
 		update("freeboard.updateFreeFile", map);
 	}
 		
-	//자유게시글 이미지 파일 삭제
+	//자유게시글 파일 삭제
 	public void deleteFreeFile(Map<String, Object> map) throws Exception {		
 		update("freeboard.deleteFreeFile", map);
 	}
@@ -82,5 +82,10 @@ public class FreeBoardDAO extends AbstractDAO {
 	@SuppressWarnings("unchecked") 
 	public List<Map<String, Object>>freeSearch(Map<String, Object> map) throws Exception {
 		return(List<Map<String, Object>>)selectList("freeboard.freeSearch", map);
+	}
+	
+	//자유게시판 찜
+	public int zzim(Map<String, Object> map) throws Exception {
+		return (int)update("freeboard.zzim", map);
 	}
 }

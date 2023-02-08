@@ -45,10 +45,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/members/review/{1}.jsp"/>
 	</definition> 
 	
-	<!-- 자유게시판 관련
+	<!-- 자유게시판 관련 -->
 	<definition name="freeboard/*" extends="main_layout">
-		<put-attribute name="body" value="/WEB-INF/views/members/{1}.jsp"/>
-	</definition> -->
+		<put-attribute name="body" value="/WEB-INF/views/board/{1}.jsp"/>
+	</definition>
 	
 	
 	

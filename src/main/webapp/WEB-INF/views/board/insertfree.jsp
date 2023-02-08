@@ -64,19 +64,7 @@
 	</form>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
-	$("#write").on("click", function(e) {
-		var fr_cate = $("#FR_CATEGORY").val();
-		$.ajax({
-			url : "/freeboard/insertfree.sosu",
-			type : "post",
-			data : {
-				FR_CATEGORY : fr_cate
-			},
-			success : function(data) {
-			}
-		});
-	});
-
+	
 	var gfv_count = 1;
 
 	$(document).ready(function() {

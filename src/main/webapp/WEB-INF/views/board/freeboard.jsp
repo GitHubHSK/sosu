@@ -30,7 +30,7 @@
 						<option value="/freeboard/food.sosu" <c:if test="${FR_CATEGORY == 'food' }">selected="selected"</c:if>>음식</option>
 						<option value="/freeboard/etc.sosu" <c:if test="${FR_CATEGORY == 'etc' }">selected="selected"</c:if>>기타</option>
 					</select>
-					<form action="/freeboard/${FR_CATEGORY }.sosu" method="post" a>
+					<form action="/freeboard/${FR_CATEGORY }.sosu" method="post">
 						<select name="searchType">
 							<option value="A">전체</option>
 							<option value="T">제목</option>

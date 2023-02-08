@@ -24,7 +24,7 @@
 							<th scope="row">카테고리</th>
 							<td>${map.FR_CATEGORY }</td>	
 							<th scope="row">작성자</th>
-							<td>${map.FR_WRITER }</td> 
+							<td>${map.FR_WRITER }</td>
 						</tr>
 						<tr>
 							<th scope="row">작성일</th> 
