@@ -8,14 +8,20 @@
 	<![CDATA[
 	SELECT 
 		FR. * , NVL(F.F_SVNAME,0) AS FF_SVNAME, M. *
-	FROM FREE 
-		FR, FILE_T F, MEMBER M      
-	WHERE F.F_TABLE(+) = 'F'
-		AND F.F_MAIN_YN(+) ='Y' 
-        AND FR.FR_DEL_YN(+) = 'N'
-        AND FR.M_IDX = M.M_IDX
-        AND F.F_ARTICLE(+) =FR.FR_IDX 
-       	AND FR_CATEGORY = #{MO_CATEGORY}
+	FROM 
+		FREE FR, FILE_T F, MEMBER M      
+	WHERE 
+		F.F_TABLE(+) = 'F'
+	AND 
+		F.F_MAIN_YN(+) ='Y' 
+    AND 
+    	FR.FR_DEL_YN(+) = 'N'
+   	AND 
+   		FR.M_IDX = M.M_IDX
+    AND 
+    	F.F_ARTICLE(+) =FR.FR_IDX 
+    AND 
+    	FR_CATEGORY = #{MO_CATEGORY}
     ORDER BY FR.FR_REGDATE DESC
 	]]>		
 	</select>
@@ -23,18 +29,25 @@
 	<!-- 자유게시글 상세 -->
 	<select id="freeDetail" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
-		SELECT FR.*, NVL2(F.F_SVNAME,1,0) AS F_SVNAME
+		SELECT FR.*, NVL(F.F_SVNAME,0) AS F_SVNAME, F.F_MAIN_YN
 		FROM 
 			FREE FR, FILE_T F      
-       	WHERE FR.FR_IDX = #{FR_IDX}
-       		AND F.F_ARTICLE(+) = FR.FR_IDX 
-       		AND FR_DEL_YN = 'N'
-       		AND F.F_TABLE(+) = 'F'
+       	WHERE 
+       		FR.FR_IDX = #{FR_IDX}
+       	AND 
+       		F.F_ARTICLE(+) = FR.FR_IDX 
+       	AND 
+       		FR_DEL_YN = 'N'
+       	AND 
+       		F.F_TABLE(+) = 'F'
 	]]>
 	</select>
 	
 	<!-- 자유게시판 등록 -->
-	<insert id="insertFree" parameterType="hashmap">		
+	<insert id="insertFree" parameterType="hashmap">
+	<selectKey keyProperty="FR_IDX" order="BEFORE" resultType="int">
+         SELECT FR_IDX.NEXTVAL FROM DUAL
+    </selectKey>		
     	INSERT INTO FREE
         	(FR_IDX,
         	M_IDX,
@@ -70,7 +83,8 @@
 			FR_REGDATE = sysdate								
 		WHERE 
 			FR_IDX = #{FR_IDX}
-			AND M_IDX = #{M_IDX}
+		AND 
+			M_IDX = #{M_IDX}
 	</update>
 	
 	<!-- 자유게시판 삭제 -->
@@ -81,7 +95,8 @@
 			FR_DEL_YN = 'Y'										
 		WHERE 
 			FR_IDX = #{FR_IDX}
-			AND M_IDX = #{M_IDX}
+		AND 
+			M_IDX = #{M_IDX}
 	</update>
 	
 	<!-- 자유게시판 프로필 -->	
@@ -90,9 +105,12 @@
 		SELECT NVL(F.F_SVNAME,0) AS PROFILE
 		FROM 
 			MEMBER M, FILE_T F
-        WHERE F.F_TABLE(+) = 'P'
-        	AND F.F_ARTICLE(+) = M.M_IDX
-        	AND M.M_IDX = #{M_IDX}
+        WHERE 
+        	F.F_TABLE(+) = 'P'
+        AND 
+        	F.F_ARTICLE(+) = M.M_IDX
+        AND 
+        	M.M_IDX = #{M_IDX}
 	]]>		
 	</select>
 	
@@ -107,61 +125,13 @@
 			FILE_T
 		WHERE
     		F_ARTICLE = (SELECT FR_IDX FROM FREE WHERE FR_DEL_YN = 'N')
-    		AND F_TABLE = 'F'
-			AND F_DEL_YN = 'N'
+    	AND 
+    		F_TABLE = 'F'
+		AND 
+			F_DEL_YN = 'N'
 	]]>
 	</select>
 
-	<!-- 자유게시판 파일등록 -->
-	<insert id="insertFreeFile" parameterType="hashmap">
-		INSERT INTO FREE
-	       	(F_IDX,
-			F_TABLE,
-			F_ARTICLE,
-			F_OGNAME,
-			F_SVNAME,
-			F_SIZE,
-			F_MAIN_YN,
-			F_DEL_YN,
-			F_REG_DATE)
-	    VALUES
-	      	(F_IDX.nextval,
-	      	'F',
-	       	#{F_ARTICLE},
-	       	#{F_OGNAME},
-	       	#{F_SVNAME},
-	      	#{F_SIZE},
-	      	'N',
-			'N',
-	        sysdate)
-	</insert>
-	
-	<!-- 자유게시판 파일 수정 -->
-	<update id="updateFreeFile" parameterType="hashmap">
-		UPDATE 
-			FILE_T
-		SET 
-			F_OGNAME = #{F_OGNAME},
-			F_SVNAME = #{F_SVNAME},
-			F_SIZE = #{F_SIZE},
-			F_MAIN_YN = #{F_MAIN_YN},
-			F_REG_DATE = sysdate						
-		WHERE 
-			F_IDX = #{F_IDX}
-			AND F_TABLE = #{F_TABLE}
-	</update>
-
-	 <!-- 자유게시판 파일 삭제 -->
-	<update id="deleteFreeFile" parameterType="hashmap">
-		UPDATE 
-			FILE_T	
-		SET 
-			F_DEL_YN = 'Y'										
-		WHERE 
-			F_TABLE = 'F'
-			F_ARTICLE = #{F_ARTICLE}				
-	</update>
-	
 	<!-- 자유게시판 검색 -->
 	<select id="freeSearch" parameterType="hashmap" resultType= "hashmap">
 		SELECT 
@@ -193,13 +163,28 @@
 	</select>
 	 
 	<!-- 좋아요 -->
-	<update id="zzim" parameterType="hashmap">
+	<insert id="insertZzim" parameterType="hashmap">
+		INSERT INTO ZZIM
+			(Z_IDX,
+    		M_IDX,
+    		Z_TABLE,
+			Z_ARTICLE)
+		VALUES
+    		(Z_IDX.NEXTVAL,
+    		#{M_IDX},
+    		'F',
+    		#{Z_ARTICLE})
+	</insert>
+	
+	<!-- 좋아요 취소 -->
+	<update id="deleteZzim" parameterType="hashmap">
 		UPDATE
-			FREE
+			ZZIM
 		SET
-			FR_COUNT = FR_COUNT + 1
+			Z_DEL_YN = 'Y'
 		WHERE
-			FR_IDX = #{FR_IDX}
+			Z_TABLE = 'F'
+			Z_ARTICLE = #{Z_ARTICLE}
 	</update>
 	
 	<!-- 좋아요 수 -->

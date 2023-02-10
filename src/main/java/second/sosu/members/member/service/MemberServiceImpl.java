@@ -157,10 +157,4 @@ public class MemberServiceImpl implements MemberService{
    public void adminMemberStop(Map<String, Object> map) throws Exception {
       memberDAO.adminMemberStop(map);
    }
-   
-   //관리자 - 회원 검색
-   @Override 
-   public Map<String, Object>memberSearch(Map<String, Object>map) throws Exception { 
-	   return memberDAO.memberSearch(map); 
-   }
 }

@@ -1,6 +1,5 @@
 package second.sosu.board.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,26 +31,26 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	
 	//자유게시글 상세
 	@Override
-	public Map<String, Object>freeDetail(Map<String, Object> map) throws Exception {	
-		
-		Map<String, Object> resultMap = new HashMap<String,Object>();
-		Map<String, Object> tempMap = freeboardDAO.freeDetail(map); //게시글의 상세 정보 가져오고 그 결과값을 "map" 이라는 이름으로 resultMap에 저장
-		resultMap.put("map", tempMap);
-		
-		List<Map<String,Object>> list = freeboardDAO.freeFileList(map); //게시글의 첨부파일 목록을 가져오고 resultMap에 "list"라는 이름으로 저장
-		resultMap.put("list", list);
-		
-		return resultMap;
+	public Map<String, Object>freeDetail(Map<String, Object> map) throws Exception {		
+		return freeboardDAO.freeDetail(map);
+	}
+	
+	//자유게시글 상세 이미지
+	@Override
+	public List<Map<String, Object>>freeDetailImg(Map<String, Object> map) throws Exception {
+		return freeboardDAO.freeDetailImg(map);
 	}
 	
 	//자유게시글 작성
 	@Override
 	public void insertFree(Map<String, Object> map, HttpSession session, HttpServletRequest request) throws Exception {		
+		
 		freeboardDAO.insertFree(map, session);
 		
-		List<Map<String,Object>> list = fileUtils.fileInsert(map, request);
-		for(int i=0, size=list.size(); i<size; i++) {
-			freeboardDAO.insertFreeFile(map);
+		List<Map<String, Object>> list = fileUtils.fileInsert(map, request);
+
+		for (int i = 0, size = list.size(); i < size; i++) {
+			freeboardDAO.freeImg(list.get(i));
 		}
 	}
 
@@ -59,19 +58,6 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	@Override
 	public void updateFree(Map<String, Object> map, HttpSession session, HttpServletRequest request) throws Exception {	
 		freeboardDAO.updateFree(map);
-		
-		freeboardDAO.deleteFreeFile(map);
-		List<Map<String,Object>> list = fileUtils.parseUpdateFileInfo(map, request);
-		Map<String,Object> tempMap = null;
-		for(int i=0, size=list.size(); i<size; i++) {
-			tempMap = list.get(i);
-			if(tempMap.get("IS_NEW").equals("Y")) {
-				freeboardDAO.insertFreeFile(tempMap);
-			}
-			else{
-				freeboardDAO.updateFreeFile(tempMap);
-			}
-		}
 	}
 
 	//자유게시글 삭제
@@ -86,6 +72,12 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 		freeboardDAO.freeMemberList(map, session);
 	}
 	
+	//자유게시글 이미지 삭제
+	@Override
+	public void freeImgDelete(String F_SVNAME) throws Exception {
+		freeboardDAO.freeImgDelete(F_SVNAME);
+	}
+	
 	//자유게시판 검색
 	@Override 
 	public List<Map<String, Object>>freeSearch(Map<String, Object>map) throws Exception { 
@@ -93,8 +85,26 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	}
 	
 	//자유게시판 찜
-	@Override
-	public int zzim(Map<String, Object> map, HttpSession session) throws Exception {
-		return freeboardDAO.zzim(map);
-	}
+	//@Override
+    //public void insertZzim(Map<String, Object> map, HttpSession session) throws Exception {
+    //    String m_idx = (String.valueOf(session.getAttribute("M_IDX"))); //로그인 아이디가져오기
+    //    map.put("M_IDX", m_idx);
+    //    freeboardDAO.insertZzim(map);
+    //}
+	
+	//자유게시판 찜 삭제
+    //@Override
+	//public void deleteZzim(Map<String, Object> map, HttpSession session) throws Exception {
+	//    String m_idx = (String.valueOf(session.getAttribute("M_IDX"))); //로그인 아이디가져오기
+	//    map.put("M_IDX", m_idx);
+	//    freeboardDAO.deleteZzim(map);
+	//}
+    
+    //자유게시판 찜 유무
+	//@Override
+	//public Map<String, Object> checkZzim(Map<String, Object> map, HttpSession session) throws Exception {
+	//	String m_idx = (String)session.getAttribute("M_IDX"); //로그인 아이디가져오기
+	//	map.put("M_IDX", m_idx);
+	//	return freeboardDAO.checkZzim(map);
+	//}
 }

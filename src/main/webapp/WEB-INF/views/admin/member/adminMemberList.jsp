@@ -20,16 +20,6 @@ history.replaceState({},null,location.pathname);
 <div class="container">
 <h1>회원 관리</h1>
 <a href="/members/logout.sosu">로그아웃</a>
-<form action="/admin/memberlist.sosu" method="post">
-	<select name="searchType">
-		<option value="A">전체</option>
-		<option value="E">아이디</option>
-		<option value="N">이름</option>
-		<option value="D">상태</option>
-	</select>
-		<input type="text" class="form-control" placeholder="검색어 입력" name="keyword" maxlength="100">
-		<input class="btn" type="submit" value="검색">
-</form>
 <form action="/admin/memberlist.sosu">
    <input type="hidden" name="listType" value="adminMemberList">
    <input type="submit" value="전체 회원 리스트">

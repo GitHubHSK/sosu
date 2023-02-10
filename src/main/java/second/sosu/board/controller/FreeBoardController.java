@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import second.sosu.board.service.FreeBoardService;
@@ -32,9 +31,11 @@ public class FreeBoardController {
 		
 		commandMap.put("MO_CATEGORY", FR_CATEGORY);
 		
-		ModelAndView mv = new ModelAndView("/board/freeboard");
-
 		List<Map<String,Object>> list= freeboardService.freeList(commandMap.getMap(), session);	
+		
+		ModelAndView mv = new ModelAndView("/board/freeboard");
+		mv.setViewName("board/freeboard");
+		
 		mv.addObject("list",list);
 		mv.addObject("session", session.getAttribute("M_IDX"));
 		
@@ -47,12 +48,16 @@ public class FreeBoardController {
 		
 		commandMap.put("FR_CATEGORY", FR_CATEGORY);
 		commandMap.put("FR_IDX", FR_IDX);
+
+		Map<String,Object> map = freeboardService.freeDetail(commandMap.getMap());	
+		
+		//List<Map<String, Object>> Flist = freeboardService.freeDetailImg(commandMap.getMap());
 		
 		ModelAndView mv = new ModelAndView("/board/freeDetail");
+		mv.setViewName("board/freeDetail");
 		
-		Map<String,Object> map = freeboardService.freeDetail(commandMap.getMap());	
-		mv.addObject("map", map.get("map")); //기존의 게시글 상세정보
-		mv.addObject("list", map.get("list")); //첨부파일의 목록
+		mv.addObject("map", map);
+		//mv.addObject("Flist", Flist);
 
 		return mv;
 	}
@@ -62,10 +67,8 @@ public class FreeBoardController {
 	public ModelAndView insertForm(@PathVariable String FR_CATEGORY, CommandMap commandMap) throws Exception {
 		commandMap.put("FR_CATEGORY", FR_CATEGORY);
 		
-		ModelAndView mv = new ModelAndView("/board/insertfree");	
-		String M_NICKNAME = (String)commandMap.get("M_NICKNAME");
-		
-		mv.addObject("M_NICKNAME", M_NICKNAME);
+		ModelAndView mv = new ModelAndView("/board/insertfree");
+		mv.setViewName("board/insertfree");
 	
 		return mv;
 	}
@@ -85,16 +88,17 @@ public class FreeBoardController {
 	
 	//자유게시글 수정 폼
 	@RequestMapping(value="/freeboard/updateForm/{FR_CATEGORY}/{FR_IDX}.sosu")
-	public ModelAndView updateForm(@PathVariable String FR_CATEGORY, @PathVariable int FR_IDX, CommandMap commandMap) throws Exception {	
-		
+	public ModelAndView updatefreeForm(@PathVariable String FR_CATEGORY, @PathVariable int FR_IDX, CommandMap commandMap) throws Exception {	
+			
 		commandMap.put("FR_CATEGORY", FR_CATEGORY);
 		commandMap.put("FR_IDX", FR_IDX);
-		
-		ModelAndView mv = new ModelAndView("/board/updatefree");
-		
+				
 		Map<String, Object> map = freeboardService.freeDetail(commandMap.getMap());	
-		mv.addObject("map", map.get("map"));
-		mv.addObject("list", map.get("list"));
+		
+		ModelAndView mv = new ModelAndView("/board/updatefree");	
+		mv.setViewName("board/updatefree");
+
+		mv.addObject("map", map);
 
 		return mv;
 	}
@@ -117,13 +121,12 @@ public class FreeBoardController {
 	}
 		
 	//자유게시글 삭제
-	@RequestMapping(value="/freeboard/deletefree.sosu")
-	public ModelAndView deletefree(CommandMap commandMap) throws Exception {
+	@RequestMapping(value="/freeboard/{FR_CATEGORY}/deletefree.sosu")
+	public ModelAndView deletefree(@PathVariable String FR_CATEGORY, CommandMap commandMap) throws Exception {
 		
-		Map<String, Object> map = freeboardService.freeDetail(commandMap.getMap());
+		commandMap.put("FR_CATEGORY", FR_CATEGORY);
 		
-		String cate = map.get("FR_CATEGORY").toString();
-		ModelAndView mv = new ModelAndView("redirect:/freeboard/" + cate + ".sosu");
+		ModelAndView mv = new ModelAndView("redirect:/freeboard/" + FR_CATEGORY + ".sosu");
 	
 		freeboardService.deleteFree(commandMap.getMap());
 		
@@ -131,26 +134,40 @@ public class FreeBoardController {
 	}
 	
 	//자유게시판 검색
-	@PostMapping(value="freeboard/{FR_CATEGORY}.sosu") 
+	@PostMapping(value="/freeboard/{FR_CATEGORY}.sosu") 
 	public ModelAndView freeSearch(@PathVariable String FR_CATEGORY, CommandMap commandMap) throws Exception { 
 		
 		commandMap.put("MO_CATEGORY", FR_CATEGORY);
-		
-		ModelAndView mv = new ModelAndView("/board/freeboard");
 	  
 		List<Map<String, Object>> list = freeboardService.freeSearch(commandMap.getMap()); 
+		
+		ModelAndView mv = new ModelAndView("/board/freeboard");
+		mv.setViewName("board/freeboard");
+		
 		mv.addObject("list", list);
 	  	
 		return mv; 
 	}
 	
 	//자유게시판 찜
-	@RequestMapping(value="freeboard/zzim.sosu")
-	@ResponseBody
-	public int zzim(CommandMap commandMap, HttpSession session) throws Exception {
+	//@RequestMapping(value="/freeboard/insertZzim/{FR_CATEGORY}/{FR_IDX}.sosu")
+	//public ModelAndView insertZzim(@PathVariable String FR_CATEGORY, @PathVariable int FR_IDX, CommandMap commandMap, HttpSession session, RedirectAttributes rttr) throws Exception { // 여러 데이터 맵형식 저장
+	//	ModelAndView mv = new ModelAndView("redirect:/freeboard/" + FR_CATEGORY + "/" + FR_IDX + ".sosu"); // 화면에 보여줄 jsp 파일을 의미(view)
 		
-		int result = freeboardService.zzim(commandMap.getMap(), session);
+	//	freeboardService.insertZzim(commandMap.getMap(), session);
+	//	rttr.addAttribute("zzimCount", commandMap.get("zzimCount")); // 별점 총합 (별점평가수)
 		
-		return result;
-	}
+	//	return mv;
+	//}
+	
+	//자유게시판 찜 삭제
+	//@RequestMapping("/freeboard/deleteZzim/{FR_CATEGORY}/{FR_IDX}.sosu")
+	//public ModelAndView deleteZzim(@PathVariable String FR_CATEGORY, @PathVariable int FR_IDX, CommandMap commandMap, HttpSession session, RedirectAttributes rttr) throws Exception { // 여러 데이터 맵형식 저장
+	//	ModelAndView mv = new ModelAndView("redirect:/freeboard/" + FR_CATEGORY + "/" + FR_IDX + ".sosu"); // 화면에 보여줄 jsp 파일을 의미(view)
+		
+	//	freeboardService.deleteZzim(commandMap.getMap(), session);
+	//	rttr.addAttribute("zzimCount", commandMap.get("zzimCount")); // 별점 총합 (별점평가수)
+		
+	//	return mv;
+	//}
 }

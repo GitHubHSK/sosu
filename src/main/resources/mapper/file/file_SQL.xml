@@ -26,5 +26,14 @@
       #{F_SIZE}, #{F_MAIN_YN}, 'N', SYSDATE)
        ]]>
    </insert>
+   
+   <!-- 이미지 삭제하기 -->
+   <update id="FileDelete" parameterType="hashmap">
+     UPDATE FILE_T
+     SET F_DEL_YN = 'Y'
+     WHERE F_SVNAME = #{chArr}
+   </update>
+   
+   
 </mapper>
 	

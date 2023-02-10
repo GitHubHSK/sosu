@@ -3,28 +3,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="/resources/js/common.js"></script>
 <head>
-<!-- <link href="/resources/css/free.css" rel="stylesheet">
-<link href="/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="/resources/assets/vendor/aos/aos.css" rel="stylesheet"> -->
-
+<link href="/resources/css/free.css" rel="stylesheet">
 <title>소수 자유게시판</title>
 </head>
 <main>
 	<article>
-		<form action="/freeboard/deletefree.sosu" method="post" onsubmit="return confirm('삭제하시겠습니까?')">
+		<form action="/freeboard/${map.FR_CATEGORY }/deletefree.sosu" method="post" onsubmit="return confirm('삭제하시겠습니까?')">
 			<input type="hidden" name="FR_IDX" value="${map.FR_IDX }">
 			<input type="hidden" name="M_IDX" value="${map.M_IDX }">
 			<table class="board_view">
 				<tbody class="contents">
 						<tr>
-							<th scope="row">제목</th>
+							<th class="board_title">제목</th>
 							<td>${map.FR_TITLE }</td>			
 						</tr>
 						<tr>
 							<th scope="row">카테고리</th>
 							<td>${map.FR_CATEGORY }</td>	
 							<th scope="row">작성자</th>
-							<td>${map.FR_WRITER }</td>
+							<td>${map.FR_WRITER }</td> 
 						</tr>
 						<tr>
 							<th scope="row">작성일</th> 
@@ -48,7 +45,7 @@
 								</c:forEach>
 							</td>
 						</tr>
-				</tbody>
+				</tbody>	
 				<tfoot>
 					<tr>
 						<td align="center">

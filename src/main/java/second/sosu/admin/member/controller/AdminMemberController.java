@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -108,22 +107,5 @@ public class AdminMemberController {
       memberService.mypageDelete(commandMap.getMap());
       mv.setViewName("redirect:/admin/memberlist.sosu");
       return mv;
-   }
-   
-   //회원 검색
-   @PostMapping(value="/admin/memberlist.sosu") 
-   public ModelAndView memberSearch(CommandMap commandMap) throws Exception { 
-	   ModelAndView mv = new ModelAndView();      
-	   if(commandMap.get("listType")==null) {
-		   commandMap.put("listType", "adminMemberList");
-	   }
-	      
-	   Map<String,Object> resultMap = memberService.adminMemberList(commandMap.getMap());
-	      
-	   mv.addObject("paginationInfo", (PaginationInfo) resultMap.get("paginationInfo"));
-	   mv.addObject("adminList", resultMap.get("result"));
-	   mv.setViewName("/admin/member/adminMemberList");
-	      
-	   return mv;  
    }
 }

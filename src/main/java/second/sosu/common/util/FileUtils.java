@@ -128,111 +128,68 @@ public class FileUtils {
    }
    
    public List<Map<String,Object>> fileInsert(Map<String,Object> map, HttpServletRequest request) throws Exception{
-		
-		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-		
-		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-		
-		MultipartFile multipartFile = null;
-		String originalFileName = null;
-		String originalFileExtension = null;
-		String storedFileName = null;
-		
-		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-		Map<String,Object> listMap = null;
-		
-		File file = new File(filePath);
-		
-		while(iterator.hasNext()) {
-			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
-			if(multipartFile.isEmpty()==false) {
-				
-				originalFileName = multipartFile.getOriginalFilename();
-				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-				storedFileName = CommonUtils.getRandomString()+originalFileExtension;
-				
-				file = new File(filePath+storedFileName);
-				multipartFile.transferTo(file); //업로드 처리
-				
-				listMap = new HashMap<String,Object>();
-				if(map.get("MO_IDX")!=null) {
-					listMap.put("F_ARTICLE", map.get("MO_IDX"));
-					listMap.put("F_TABLE", map.get("M"));
-					
-				}else if(map.get("RV_IDX")!=null) {
-					listMap.put("F_ARTICLE", map.get("RV_IDX"));
-					listMap.put("F_TABLE", map.get("R"));
-					
-				}else if(map.get("FR_IDX")!=null) {
-					listMap.put("F_ARTICLE", map.get("FR_IDX"));
-					listMap.put("F_TABLE", map.get("F"));
-					
-				}else if(map.get("N_IDX")!=null) {
-					listMap.put("F_ARTICLE", map.get("N_IDX"));
-					listMap.put("F_TABLE", map.get("N"));
-				}
-				
-				//메인 이미지는 이름 mainImage로 ㄱㄱ
-				if(multipartFile.getName().equals("mainIamge")) {
-					listMap.put("F_MAIN_YN", "Y");
-				}else {
-					listMap.put("F_MAIN_YN", "N");
-				}
-	           
-	            listMap.put("F_OGNAME", originalFileName);
-	            listMap.put("F_SVNAME", storedFileName);
-	            listMap.put("F_SIZE", multipartFile.getSize());
-	            list.add(listMap);
-				
-			}
-		}
-		return list;
-		
-	}
-   
-   public List<Map<String, Object>> parseUpdateFileInfo(Map<String, Object> map, HttpServletRequest request) throws Exception{
-		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
-		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-		
-		MultipartFile multipartFile = null;
-		String originalFileName = null;
-		String originalFileExtension = null;
-		String storedFileName = null;
-		
-		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-		Map<String, Object> listMap = null; 
-		
-		String fr_idx = (String)map.get("FR_IDX");
-		String requestName = null;
-		String idx = null;
-		
-		while(iterator.hasNext()) {
-			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
-			if(multipartFile.isEmpty() == false) {
-				originalFileName = multipartFile.getOriginalFilename();
-				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf(".")); //확장자만 떼어놓았다가
-				storedFileName = CommonUtils.getRandomString() + originalFileExtension; //다시 붙이기
-				
-				multipartFile.transferTo(new File(filePath + storedFileName));
-				
-				listMap = new HashMap<String,Object>();
-				listMap.put("IS_NEW", "Y");
-				listMap.put("FR_IDX", fr_idx);
-				listMap.put("F_OGNAME", originalFileName);
-				listMap.put("F_SVNAME", storedFileName);
-				listMap.put("F_SIZE", multipartFile.getSize());
-				list.add(listMap);
-			} else {
-				requestName = multipartFile.getName(); //html태그에서 file태그의 name값을 가져온다.
-				idx = "IDX_"+requestName.substring(requestName.indexOf("_")+1);
-				if(map.containsKey(idx) == true && map.get(idx) != null) {
-					listMap = new HashMap<String,Object>();
-					listMap.put("IS_NEW", "N");
-					listMap.put("F_IDX", map.get(idx));
-					list.add(listMap);
-				}
-			}
-		}
-		return list;
-	}
+      
+      String realPath = "";
+      String savePath = filePath;
+         
+      realPath = request.getRealPath(savePath);
+      
+      MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+      
+      Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+      
+      MultipartFile multipartFile = null;
+      String originalFileName = null;
+      String originalFileExtension = null;
+      String storedFileName = null;
+      
+      List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+      Map<String,Object> listMap = null;
+      
+      while(iterator.hasNext()) {
+         multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+         if(multipartFile.isEmpty()==false) {
+            
+            originalFileName = multipartFile.getOriginalFilename();
+            originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+            storedFileName = CommonUtils.getRandomString()+originalFileExtension;
+            
+            File file = new File(realPath+"upload/"+storedFileName);
+            multipartFile.transferTo(file); //업로드 처리
+            
+            listMap = new HashMap<String,Object>();
+            if(map.get("MO_IDX")!=null) {
+               listMap.put("F_ARTICLE", map.get("MO_IDX"));
+               listMap.put("F_TABLE", "M");
+               
+            }else if(map.get("RV_IDX")!=null) {
+               listMap.put("F_ARTICLE", map.get("RV_IDX"));
+               listMap.put("F_TABLE", "R");
+               
+            }else if(map.get("FR_IDX")!=null) {
+               listMap.put("F_ARTICLE", map.get("FR_IDX"));
+               listMap.put("F_TABLE", "F");
+               
+            }else if(map.get("N_IDX")!=null) {
+               listMap.put("F_ARTICLE", map.get("N_IDX"));
+               listMap.put("F_TABLE", "N");
+            }
+            
+            //메인 이미지는 이름 mainImage로 ㄱㄱ
+            if(multipartFile.getName().equals("mainIamge")) {
+               listMap.put("F_MAIN_YN", "Y");
+            }else {
+               listMap.put("F_MAIN_YN", "N");
+            }
+              
+               listMap.put("F_OGNAME", originalFileName);
+               listMap.put("F_SVNAME", storedFileName);
+               listMap.put("F_SIZE", multipartFile.getSize());
+               list.add(listMap);
+            
+         }
+      }
+      return list;
+   }
+
 }

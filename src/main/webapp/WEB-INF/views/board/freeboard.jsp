@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/include/include-header.jspf"%>
 <script src="/resources/js/common.js"></script>
-<html>
 <head>
 <link href="/resources/css/list.css" rel="stylesheet">
 <link href="/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -85,4 +84,3 @@
 		</div>
 	</article>
 </main>
-</html>

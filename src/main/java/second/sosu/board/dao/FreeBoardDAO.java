@@ -36,6 +36,12 @@ public class FreeBoardDAO extends AbstractDAO {
 	public Map<String, Object> freeDetail(Map<String, Object> map) throws Exception {
 		return (Map<String, Object>) selectOne("freeboard.freeDetail", map);
 	}
+	
+	//자유게시글 상세 이미지
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> freeDetailImg(Map<String, Object> map) throws Exception {
+		return selectList("freeboard.freeDetailImg", map);
+	}
 
 	//자유게시글 작성
 	public void insertFree(Map<String, Object> map, HttpSession session) throws Exception {		
@@ -63,19 +69,14 @@ public class FreeBoardDAO extends AbstractDAO {
 		return (List<Map<String, Object>>)selectList("freeboard.freeFileList", map);
 	}
 	
-	//자유게시글 파일 등록
-	public void insertFreeFile(Map<String, Object> map) throws Exception {		
-		insert("freeboard.insertFreeFile", map);
+	//자유게시판 이미지 등록
+	public void freeImg(Map<String, Object> map) throws Exception {
+		insert("file.imgInsert", map);
 	}
-
-	//자유게시글 파일 수정
-	public void updateFreeFile(Map<String, Object> map) throws Exception {		
-		update("freeboard.updateFreeFile", map);
-	}
-		
-	//자유게시글 파일 삭제
-	public void deleteFreeFile(Map<String, Object> map) throws Exception {		
-		update("freeboard.deleteFreeFile", map);
+	
+	//자유게시판 이미지 삭제
+	public void freeImgDelete(String F_SVNAME) throws Exception {
+		update("file.FileDelete", F_SVNAME);
 	}
 	
 	//자유게시판 검색
@@ -85,7 +86,18 @@ public class FreeBoardDAO extends AbstractDAO {
 	}
 	
 	//자유게시판 찜
-	public int zzim(Map<String, Object> map) throws Exception {
-		return (int)update("freeboard.zzim", map);
-	}
+	//public void insertZzim(Map<String, Object> map) throws Exception {
+    //    insert("freeboard.insertZzim", map);
+    //}
+	
+	//자유게시판 찜 삭제
+    //public void deleteZzim(Map<String, Object> map) throws Exception {
+    //    update("freeboard.deleteZzim", map);
+    //}
+    
+	//자유게시판 찜 유무
+	//@SuppressWarnings("unchecked")
+	//public Map<String, Object> checkZzim(Map<String, Object> map) throws Exception {
+	//	return (Map<String, Object>)selectOne("freeboard.freeZzimCheck", map);
+	//}
 }
