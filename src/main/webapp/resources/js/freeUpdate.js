@@ -1,31 +1,31 @@
-	/* 입력된 바이트(글자수) 값 제어 */
-    function fn_checkByte(obj) {
-       const maxByte = 1400; //최대 100바이트
-       const text_val = obj.value; //입력한 문자
-       const text_len = text_val.length; //입력한 문자수
+/* 입력된 바이트(글자수) 값 제어 */
+function fn_checkByte(obj) {
+	const maxByte = 1400; //최대 100바이트
+	const text_val = obj.value; //입력한 문자
+    const text_len = text_val.length; //입력한 문자수
  
-       let totalByte = 0;
-       for (let i = 0; i < text_len; i++) {
-          const each_char = text_val.charAt(i);
-          const uni_char = escape(each_char); //유니코드 형식으로 변환
-          if (uni_char.length > 4) {
-             // 한글 : 2Byte
-             totalByte += 3;
-          } else {
-             // 영문,숫자,특수문자 : 1Byte
-             totalByte += 1;
-          }
-       }
- 
-       if (totalByte > maxByte) {
-          alert('최대 1500Byte까지만 입력가능합니다.');
-          document.getElementById("nowByte").innerText = totalByte;
-          document.getElementById("nowByte").style.color = "red";
+    let totalByte = 0;
+    for (let i = 0; i < text_len; i++) {
+       const each_char = text_val.charAt(i);
+       const uni_char = escape(each_char); //유니코드 형식으로 변환
+       if (uni_char.length > 4) {
+          // 한글 : 2Byte
+          totalByte += 3;
        } else {
-          document.getElementById("nowByte").innerText = totalByte;
-          document.getElementById("nowByte").style.color = "green";
+          // 영문,숫자,특수문자 : 1Byte
+          totalByte += 1;
        }
     }
+ 
+    if (totalByte > maxByte) {
+       alert('최대 1500Byte까지만 입력가능합니다.');
+       document.getElementById("nowByte").innerText = totalByte;
+       document.getElementById("nowByte").style.color = "red";
+    } else {
+       document.getElementById("nowByte").innerText = totalByte;
+       document.getElementById("nowByte").style.color = "green";
+    }
+}	
 
 /* 파일 추가, 수정 버튼 */
 var gfv_count = 1;

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import second.sosu.board.service.FreeBoardService;
@@ -44,20 +45,20 @@ public class FreeBoardController {
 	
 	//자유게시글 상세
 	@RequestMapping(value="/freeboard/{FR_CATEGORY}/{FR_IDX}.sosu")
-	public ModelAndView freeDetail(@PathVariable String FR_CATEGORY, @PathVariable int FR_IDX, CommandMap commandMap) throws Exception {	
+	public ModelAndView freeDetail(@PathVariable String FR_CATEGORY, @PathVariable int FR_IDX, CommandMap commandMap, HttpSession session, HttpServletRequest request) throws Exception {	
 		
 		commandMap.put("FR_CATEGORY", FR_CATEGORY);
 		commandMap.put("FR_IDX", FR_IDX);
-
+		
 		Map<String,Object> map = freeboardService.freeDetail(commandMap.getMap());	
 		
-		//List<Map<String, Object>> Flist = freeboardService.freeDetailImg(commandMap.getMap());
+		List<Map<String, Object>> Flist = freeboardService.freeDetailImg(commandMap.getMap(), commandMap);
 		
 		ModelAndView mv = new ModelAndView("/board/freeDetail");
 		mv.setViewName("board/freeDetail");
 		
 		mv.addObject("map", map);
-		//mv.addObject("Flist", Flist);
+		mv.addObject("Flist", Flist);
 
 		return mv;
 	}
@@ -92,13 +93,17 @@ public class FreeBoardController {
 			
 		commandMap.put("FR_CATEGORY", FR_CATEGORY);
 		commandMap.put("FR_IDX", FR_IDX);
-				
+		
+		//이미지 상세보기
+		List<Map<String, Object>> Flist = freeboardService.freeDetailImg(commandMap.getMap(), commandMap);
+		
 		Map<String, Object> map = freeboardService.freeDetail(commandMap.getMap());	
 		
 		ModelAndView mv = new ModelAndView("/board/updatefree");	
 		mv.setViewName("board/updatefree");
 
 		mv.addObject("map", map);
+		mv.addObject("flist", Flist);
 
 		return mv;
 	}
@@ -133,11 +138,27 @@ public class FreeBoardController {
 		return mv;
 	}
 	
+	//자유게시판 이미지 삭제
+	@RequestMapping("/freeboard/freeImgDelete.sosu")
+		public String freeImgDelete(@RequestParam(value = "chbox[]", required = false) String[] chArr) throws Exception {
+			
+			String F_SVNAME = null;
+
+			if(F_SVNAME == null) {
+				for (int i = 0; i < chArr.length; i++) {
+					F_SVNAME = chArr[i];
+
+					System.out.println("delete" + F_SVNAME);
+					
+					freeboardService.freeImgDelete(F_SVNAME);
+				}
+			}
+			return "/freeboard/updatefree.sosu";
+		}
+	
 	//자유게시판 검색
-	@PostMapping(value="/freeboard/{FR_CATEGORY}.sosu") 
-	public ModelAndView freeSearch(@PathVariable String FR_CATEGORY, CommandMap commandMap) throws Exception { 
-		
-		commandMap.put("MO_CATEGORY", FR_CATEGORY);
+	@PostMapping(value="/freeboard/search.sosu") 
+	public ModelAndView freeSearch(CommandMap commandMap) throws Exception { 
 	  
 		List<Map<String, Object>> list = freeboardService.freeSearch(commandMap.getMap()); 
 		
@@ -148,26 +169,4 @@ public class FreeBoardController {
 	  	
 		return mv; 
 	}
-	
-	//자유게시판 찜
-	//@RequestMapping(value="/freeboard/insertZzim/{FR_CATEGORY}/{FR_IDX}.sosu")
-	//public ModelAndView insertZzim(@PathVariable String FR_CATEGORY, @PathVariable int FR_IDX, CommandMap commandMap, HttpSession session, RedirectAttributes rttr) throws Exception { // 여러 데이터 맵형식 저장
-	//	ModelAndView mv = new ModelAndView("redirect:/freeboard/" + FR_CATEGORY + "/" + FR_IDX + ".sosu"); // 화면에 보여줄 jsp 파일을 의미(view)
-		
-	//	freeboardService.insertZzim(commandMap.getMap(), session);
-	//	rttr.addAttribute("zzimCount", commandMap.get("zzimCount")); // 별점 총합 (별점평가수)
-		
-	//	return mv;
-	//}
-	
-	//자유게시판 찜 삭제
-	//@RequestMapping("/freeboard/deleteZzim/{FR_CATEGORY}/{FR_IDX}.sosu")
-	//public ModelAndView deleteZzim(@PathVariable String FR_CATEGORY, @PathVariable int FR_IDX, CommandMap commandMap, HttpSession session, RedirectAttributes rttr) throws Exception { // 여러 데이터 맵형식 저장
-	//	ModelAndView mv = new ModelAndView("redirect:/freeboard/" + FR_CATEGORY + "/" + FR_IDX + ".sosu"); // 화면에 보여줄 jsp 파일을 의미(view)
-		
-	//	freeboardService.deleteZzim(commandMap.getMap(), session);
-	//	rttr.addAttribute("zzimCount", commandMap.get("zzimCount")); // 별점 총합 (별점평가수)
-		
-	//	return mv;
-	//}
 }

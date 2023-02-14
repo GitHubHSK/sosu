@@ -32,3 +32,14 @@ function ComSubmit(opt_formId) {
     frm.submit(); 
   };
 }
+
+/* 찜 */
+function zzim1() {
+    alert("카페가 찜 되었어요!");
+    return true;
+}
+
+function zzim2() {
+    alert("카페 찜이 삭제되었어요!");
+    return true;
+}

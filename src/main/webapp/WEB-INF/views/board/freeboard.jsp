@@ -29,7 +29,7 @@
 						<option value="/freeboard/food.sosu" <c:if test="${FR_CATEGORY == 'food' }">selected="selected"</c:if>>음식</option>
 						<option value="/freeboard/etc.sosu" <c:if test="${FR_CATEGORY == 'etc' }">selected="selected"</c:if>>기타</option>
 					</select>
-					<form action="/freeboard/${FR_CATEGORY }.sosu" method="post">
+					<form action="/freeboard/search.sosu" method="post">
 						<select name="searchType">
 							<option value="A">전체</option>
 							<option value="T">제목</option>
@@ -57,16 +57,16 @@
 		
          <c:choose>
             <c:when test="${fn:length(list) > 0 }">
-               <c:forEach items="${list}" var = "map">
+               <c:forEach items="${list }" var = "list">
 				<div class="col-lg-3 menu-item" style="margin-bottom: 80px;">
-				<div class="row gy-5"  onclick="location.href='/freeboard/${map.FR_CATEGORY }/${map.FR_IDX }.sosu'" style="cursor: pointer;">
-					<input type="hidden" name="M_IDX"	value="${map.M_IDX }">
-					<input type="hidden" name="FR_IDX" value="${map.FR_IDX }">
-					<img src="${pageContext.request.contextPath }/resources/assets/img/image/${map.F_SVNAME }" alt="" style='width: 300px; height: 300px'>
+				<div class="row gy-5"  onclick="location.href='/freeboard/${list.FR_CATEGORY }/${list.FR_IDX }.sosu'" style="cursor: pointer;">
+					<input type="hidden" name="M_IDX"	value="${list.M_IDX }">
+					<input type="hidden" name="FR_IDX" value="${list.FR_IDX }">
+					<img src="${pageContext.request.contextPath }/resources/img/upload/${list.F_SVNAME }" alt="" style='width: 300px; height: 300px'>
 					<p></p>
-					<p class="moim-title">${map.FR_TITLE}
-					<span class="detail-writer">${map.FR_WRITER}</span></p>
-					 <hr style="width:300px;">
+					<p class="moim-title">${list.FR_TITLE }
+					<span class="detail-writer">${list.FR_WRITER }</span></p>
+					<hr style="width:300px;">
 					<span class="hhh">♡</span>
 				</div>
 				</div>

@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import second.sosu.board.dao.FreeBoardDAO;
+import second.sosu.common.domain.CommandMap;
 import second.sosu.common.util.FileUtils;
 
 @Service("freeboardService")
@@ -37,14 +38,13 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	
 	//자유게시글 상세 이미지
 	@Override
-	public List<Map<String, Object>>freeDetailImg(Map<String, Object> map) throws Exception {
-		return freeboardDAO.freeDetailImg(map);
+	public List<Map<String, Object>>freeDetailImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		return freeboardDAO.freeDetailImg(map, commandMap);
 	}
 	
 	//자유게시글 작성
 	@Override
-	public void insertFree(Map<String, Object> map, HttpSession session, HttpServletRequest request) throws Exception {		
-		
+	public void insertFree(Map<String, Object> map, HttpSession session, HttpServletRequest request) throws Exception {				
 		freeboardDAO.insertFree(map, session);
 		
 		List<Map<String, Object>> list = fileUtils.fileInsert(map, request);
@@ -58,12 +58,24 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	@Override
 	public void updateFree(Map<String, Object> map, HttpSession session, HttpServletRequest request) throws Exception {	
 		freeboardDAO.updateFree(map);
+		
+		List<Map<String, Object>> list = fileUtils.fileInsert(map, request);
+
+		for (int i = 0, size = list.size(); i < size; i++) {
+			freeboardDAO.freeImg(list.get(i));
+		}
 	}
 
 	//자유게시글 삭제
 	@Override
 	public void deleteFree(Map<String, Object> map) throws Exception {	
 		freeboardDAO.deleteFree(map);
+	}
+	
+	//자유게시판 검색
+	@Override 
+	public List<Map<String, Object>>freeSearch(Map<String, Object>map) throws Exception { 
+		return freeboardDAO.freeSearch(map); 
 	}
 	
 	//자유게시글 프로필 리스트
@@ -77,34 +89,4 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	public void freeImgDelete(String F_SVNAME) throws Exception {
 		freeboardDAO.freeImgDelete(F_SVNAME);
 	}
-	
-	//자유게시판 검색
-	@Override 
-	public List<Map<String, Object>>freeSearch(Map<String, Object>map) throws Exception { 
-		return freeboardDAO.freeSearch(map); 
-	}
-	
-	//자유게시판 찜
-	//@Override
-    //public void insertZzim(Map<String, Object> map, HttpSession session) throws Exception {
-    //    String m_idx = (String.valueOf(session.getAttribute("M_IDX"))); //로그인 아이디가져오기
-    //    map.put("M_IDX", m_idx);
-    //    freeboardDAO.insertZzim(map);
-    //}
-	
-	//자유게시판 찜 삭제
-    //@Override
-	//public void deleteZzim(Map<String, Object> map, HttpSession session) throws Exception {
-	//    String m_idx = (String.valueOf(session.getAttribute("M_IDX"))); //로그인 아이디가져오기
-	//    map.put("M_IDX", m_idx);
-	//    freeboardDAO.deleteZzim(map);
-	//}
-    
-    //자유게시판 찜 유무
-	//@Override
-	//public Map<String, Object> checkZzim(Map<String, Object> map, HttpSession session) throws Exception {
-	//	String m_idx = (String)session.getAttribute("M_IDX"); //로그인 아이디가져오기
-	//	map.put("M_IDX", m_idx);
-	//	return freeboardDAO.checkZzim(map);
-	//}
 }

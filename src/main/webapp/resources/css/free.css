@@ -17,19 +17,6 @@ a {
 	margin: 100px auto;
 }
 
-.board_title {
-	margin-bottom: 30px;
-}
-
-.board_title strong {
-	font-size: 3rem;
-}
-
-.board_title p {
-	margin-top: 5px;
-	font-size: 1.4rem;
-}
-
 /* 버튼 */
 .bt_wrap {
 	margin-top: 30px;
@@ -66,11 +53,6 @@ a {
 	color: #000;
 }
 
-.bt_wrap a.write {
-	background: #fd8731;
-	color: #fff;
-}
-
 .bt_wrap a.update {
 	background: #fd8731;
 	color: #fff;
@@ -81,11 +63,7 @@ a {
 	color: inherit;
 }
 
-.bt_wrap button.btn {
-	background: #ff0000;
-	color: #fff;
-}
-
+/* 자유게시판 상세 */
 .board_view {
 	width: 100%;
 	border-top: 2px solid #fd8731;
@@ -101,7 +79,7 @@ a {
 /* 자유게시판 정보 */
 .board_view .info {
 	padding: 15px;
-	border-bottom: 1px solid #999;
+	border-bottom: 1px solid #fd8731;
 	/*font-size: 0;*/
 }
 
@@ -147,78 +125,8 @@ a {
 /* 자유게시판 내용 */
 .board_view .cont {
 	padding: 15px;
-	border-bottom: 1px solid #fd8731;
+	border-bottom: 2px solid #fd8731;
 	line-height: 160%;
 	font-size: 1.4rem;
 	white-space: pre-wrap;
-}
-
-/* 자유게시판 작성 */
-.board_write {
-	border-top: 2px solid #000;
-}
-
-.board_write .title 
-.board_write .info {
-	padding: 15px;
-}
-
-.board_write .info {
-	border-top: 1px dashed #ddd;
-	border-bottom: 1px solid #000;
-	font-size: 0;
-}
-
-.board_write .title dl {
-	font-size: 0;
-}
-
-.board_write .info dl {
-	display: inline-block;
-	width: 50%;
-	vertical-align: middle;
-}
-
-.board_write .title dt,
-.board_write .title dd,
-.board_write .info dt,
-.board_write .info dd {
-	display: inline-block;
-	vertical-align: middle;
-	font-size: 1.4rem;
-}
-
-.board_write .title dt
-.board_write .info dt {
-	width: 100px;
-}
-
-.board_write .title dd {
-	width: calc(100% - 100px);
-}
-
-.board_write .title input[type="text"]
-.board_write .info select
-.board_write .info dd {
-	padding: 10px;
-	box-sizing: border-box;
-}
-
-
-.board_write .title input[type="text"] {
-	width: 80%;
-}
-
-.board_write .cont {
-	border-bottom: 1px solid #000;
-}
-
-.board_write .cont textarea {
-	display: block;
-	width: 100%;
-	height: 300px;
-	padding: 15px;
-	box-sizing: border-box;
-	border: 0;
-	resize: vertical;
 }

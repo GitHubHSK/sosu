@@ -15,7 +15,7 @@
 <div class="container" style="text-align:center; margin-bottom: 100px;">
 <h2 style=" margin-top: 90px; margin-bottom: 50px;">게시글 작성</h2>
 <form id="frm" name="insertForm" enctype="multipart/form-data">
-<input type="hidden" name="FR_IDX" value="${FR_IDX}">
+<input type="hidden" name="FR_IDX" value="${FR_IDX }">
 <table class="input-form">
 	<colgroup>
     	<col style="width:150px;">

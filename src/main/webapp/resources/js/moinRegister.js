@@ -19,6 +19,8 @@ $("#regB").on("click", function(e){
        $('#ageNoLimit').click(function() {
          var min = $('#MO_MINAGE').detach();
          var max = $('#MO_MAXAGE').detach();
+         var wv = $('#wave').detach();
+
           $('#ageNoLimit').css('display', 'none');
           $('#Limit').css('display', 'block');
           
@@ -32,6 +34,7 @@ $("#regB").on("click", function(e){
           $('#Limit').click(function() {
              $("#agetd").append(min);
              $("#agetd").append(max);
+             $('#MO_MINAGE').after(wv);
                $("#ll").remove();
                $("#MO_MINAGE2").remove();
                $("#MO_MAXAGE2").remove();
@@ -60,7 +63,7 @@ $("#regB").on("click", function(e){
       function fn_addFile() {
          var str = "<p><input type='file' id='file' name='file_"
                    + (gfv_count++)
-                   + "'><a href='#this' class='btn' name='delete'>삭제</a></p>";
+                   + "'><a href='#this' class='mrgbtn' name='delete' >삭제</a></p>";
  
        $("#fileDiv").append(str);
          
@@ -168,7 +171,7 @@ $("#regB").on("click", function(e){
  
     /* 입력된 바이트(글자수) 값 제어 */
     function fn_checkByte(obj) {
-       const maxByte = 1400; //최대 100바이트
+       const maxByte = 1800; //최대 100바이트
        const text_val = obj.value; //입력한 문자
        const text_len = text_val.length; //입력한 문자수
  
@@ -186,7 +189,7 @@ $("#regB").on("click", function(e){
        }
  
        if (totalByte > maxByte) {
-          alert('최대 1500Byte까지만 입력가능합니다.');
+          alert('최대 1800Byte까지만 입력가능합니다.');
           document.getElementById("nowByte").innerText = totalByte;
           document.getElementById("nowByte").style.color = "red";
        } else {
