@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script src="/resources/js/common.js"></script>
 <head>
+<script src="/resources/js/common.js"></script>
 <script src="/resources/js/freeboard.js"></script>
 <link href="/resources/css/free.css" rel="stylesheet">
 <title>소수 자유게시판</title>
 </head>
 <main>
 	<article>
-	    <form action="/freeboard/${map.FR_CATEGORY }/deletefree.sosu" method="post" onsubmit="return confirm('삭제하시겠습니까?')">
+	    <form action="/freeboard/deletefree.sosu" method="post" onsubmit="return confirm('삭제하시겠습니까?')">
 			<input type="hidden" name="FR_IDX" value="${map.FR_IDX }">
 			<input type="hidden" name="M_IDX" value="${map.M_IDX }">
 	    		<div class="board_wrap">	    	
@@ -43,7 +43,7 @@
 											<img src="${pageContext.request.contextPath}/resources/img/upload/${Flist.F_SVNAME }"  style="max-width: 100%; height: auto;"/>
 										</center>
 									</c:if>
-									<c:if test="${Flist.F_SVNAME =='0' }">
+									<c:if test="${Flist.F_SVNAME == '0' }">
 									</c:if>
 								</c:forEach>
 	    					</div>

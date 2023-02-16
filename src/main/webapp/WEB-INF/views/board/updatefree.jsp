@@ -37,7 +37,14 @@
 				<span style="color:#fd8731;">*</span>
 			</th>
 			<td class="contents">				
-				${map.FR_CATEGORY }
+				<select name="FR_CATEGORY" id="FR_CATEGORY" required>
+					<option value="culture">문화/예술</option>
+					<option value="sports">운동/스포츠</option>
+					<option value="game">게임/오락</option>
+					<option value="outdoor">아웃도어/여행</option>
+					<option value="food">음식</option>
+					<option value="etc">기타</option>
+				</select>
 			</td>	
 		</tr>
 		<tr>
@@ -57,7 +64,7 @@
 			</th>
             <td class="contents">
 				<textarea style="width: 100%;" rows="17" class="form-control" name="FR_CONTENT" placeholder="내용을 입력하세요" class="form-control" id="textArea_byteLimit" name="textArea_byteLimit" onkeyup="fn_checkByte(this)" wrap="hard" cols = "">${map.FR_CONTENT }</textarea>
-                	<sup>(<span id="nowByte">0</span>/1400bytes)</sup>
+                	<sup>(<span id="nowByte">0</span>/2000bytes)</sup>
 			</td>
 		</tr>
 		<tr>

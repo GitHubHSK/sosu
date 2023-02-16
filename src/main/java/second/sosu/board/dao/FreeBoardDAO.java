@@ -16,7 +16,7 @@ public class FreeBoardDAO extends AbstractDAO {
 	//자유게시판 리스트
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>>freeList(Map<String, Object> map, HttpSession session) throws Exception {	      
-		List<Map<String, Object>> freeList = (List<Map<String, Object>>) selectList("freeboard.freeList", map);		
+		List<Map<String, Object>> freeList = (List<Map<String, Object>>)selectList("freeboard.freeList", map);		
 		  //프사
 	      for (int i = 0; i < freeList.size(); i++) {
 	         Map<String, Object> freemember = (Map<String, Object>) selectOne("freeboard.freeMemberList", freeList.get(i).get("M_IDX"));
@@ -30,15 +30,28 @@ public class FreeBoardDAO extends AbstractDAO {
 	      return freeList;
 	}
 	
+	//자유게시판 페이징 리스트
+	//@SuppressWarnings("unchecked")
+	//public Map<String, Object>freeList(Map<String, Object> map, HttpSession session) throws Exception {
+		//Map<String, Object> freeList = (Map<String, Object>)selectPagingList("freeboard.freeList", map);
+		
+	//}
+	
+	//자유게시판 리스트 이미지
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>>freeListImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		return selectList("freeboard.freeListImg", map);
+	}
+	
 	//자유게시글 상세	 
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> freeDetail(Map<String, Object> map) throws Exception {
-		return (Map<String, Object>) selectOne("freeboard.freeDetail", map);
+	public Map<String, Object>freeDetail(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>)selectOne("freeboard.freeDetail", map);
 	}
 	
 	//자유게시글 상세 이미지
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> freeDetailImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
+	public List<Map<String, Object>>freeDetailImg(Map<String, Object> map, CommandMap commandMap) throws Exception {
 		return selectList("freeboard.freeDetailImg", map);
 	}
 

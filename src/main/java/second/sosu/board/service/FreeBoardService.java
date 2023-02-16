@@ -11,8 +11,11 @@ import second.sosu.common.domain.CommandMap;
 public interface FreeBoardService {
 	
 	//자유게시판 리스트
-	List<Map<String, Object>>freeList(Map<String, Object> map, HttpSession session) throws Exception; 
+	List<Map<String, Object>>freeList(Map<String, Object> map, HttpSession session) throws Exception;
 	
+	//자유게시판 페이징 리스트
+	//Map<String, Object>freeList(Map<String, Object> map, HttpSession session) throws Exception;
+
 	//자유게시글 상세
 	Map<String, Object>freeDetail(Map<String, Object> map) throws Exception; 
 	

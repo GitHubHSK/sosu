@@ -30,6 +30,12 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 		return freeboardDAO.freeList(map, session);
 	}
 	
+	//자유게시판 페이징 리스트
+	//@Override
+	//public Map<String, Object>freeList(Map<String, Object> map, HttpSession session) throws Exception {
+	//	return freeboardDAO.freeList(map, session);
+	//}
+
 	//자유게시글 상세
 	@Override
 	public Map<String, Object>freeDetail(Map<String, Object> map) throws Exception {		

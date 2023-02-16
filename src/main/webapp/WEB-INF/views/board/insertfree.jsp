@@ -64,7 +64,7 @@
 			</th>
             <td class="contents">
 				<textarea style="width: 100%;" rows="17" class="form-control" name="FR_CONTENT" placeholder="내용을 입력하세요" class="form-control" id="textArea_byteLimit" name="textArea_byteLimit" onkeyup="fn_checkByte(this)" wrap="hard" cols = ""></textarea>
-                	<sup>(<span id="nowByte">0</span>/1400bytes)</sup>
+                	<sup>(<span id="nowByte">0</span>/2000bytes)</sup>
 			</td> 
 		</tr>
 		<tr>

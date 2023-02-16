@@ -173,12 +173,12 @@
       </p>
          <c:forEach items="${frlist}" var="f" end="3">
             <div class="col-lg-3 menu-item" onclick="location.href='/freeboard/${f.FR_CATEGORY}/${f.FR_IDX}.sosu'" style="cursor: pointer;">
-                <c:if test="${f.f_svname != null }">
+                <c:if test="${f.FF_SVNAME != '0' }">
                 <img
-                     src="${pageContext.request.contextPath}/resources/assets/img/image/${f.F_SVNAME }"
+                     src="${pageContext.request.contextPath}/resources/img/upload/${f.FF_SVNAME }"
                      alt="" style='width: 300px; height: 300px'>
                  </c:if>
-                 <c:if test="${f.f_svname == null }">
+                 <c:if test="${f.FF_SVNAME == '0' }">
                     <img src="/resources/img/icons/list.png"  style='width: 300px; height: 300px'>
                  </c:if> 
                      <br />

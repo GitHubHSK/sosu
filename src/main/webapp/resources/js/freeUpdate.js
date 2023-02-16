@@ -1,6 +1,6 @@
 /* 입력된 바이트(글자수) 값 제어 */
 function fn_checkByte(obj) {
-	const maxByte = 1400; //최대 100바이트
+	const maxByte = 2000; //최대 100바이트
 	const text_val = obj.value; //입력한 문자
     const text_len = text_val.length; //입력한 문자수
  
@@ -18,7 +18,7 @@ function fn_checkByte(obj) {
     }
  
     if (totalByte > maxByte) {
-       alert('최대 1500Byte까지만 입력가능합니다.');
+       alert('최대 2000Byte까지만 입력가능합니다.');
        document.getElementById("nowByte").innerText = totalByte;
        document.getElementById("nowByte").style.color = "red";
     } else {
@@ -67,10 +67,10 @@ var gfv_count = 1;
 	}
 
 	function fn_addFile() {
-		var str = "<p><input type='file' name='file_" + (gfv_count++)
-				+ "'><a href='#this' class='btn' name='delete'>삭제</a></p>";
-		$("#fileDiv").append(str); //<<div id="fileDiv">에 변수 str의 값을 추가
-		$("a[name='delete']").on("click", function(e) {
+		var str = "<p>" + "<input type='file' id='file_"+(gfv_count)+"' name='file_"+(gfv_count)+"'>"+
+			"<a href='#this' class='btn' id='delete_"+(gfv_count)+"' name='delete_"+(gfv_count)+"'>삭제</a>" + "</p>";
+		$("#fileDiv").append(str);
+		$("#delete_"+(gfv_count++)).on("click", function(e){ //삭제 버튼
 			e.preventDefault();
 			fn_deleteFile($(this));
 		});
